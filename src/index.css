@@ -18,6 +18,12 @@
 
 *{
   font-family: "Rustea Custom", sans-serif; 
+  /* scrollbar-width: none; */
+  scroll-behavior: smooth;
+}
+
+html, body{
+  overflow-x: hidden;
 }
 
 @keyframes spin-reverse {
@@ -162,4 +168,15 @@
 .btn.bottom {
     -webkit-clip-path: polygon(100% 0, 100% calc(100% - 18px), calc(100% - 29px) 100%, 0 100%, 0 0);
     clip-path: polygon(100% 0, 100% calc(100% - 18px), calc(100% - 29px) 100%, 0 100%, 0 0);
+}
+
+/* Events Section */
+.animated-event-img {
+  animation: customAnimation 3s linear infinite alternate;
+}
+
+@keyframes customAnimation {
+  100% {
+    transform: translate(-10px, -15px) rotateZ(-2deg);
+  }
 }

@@ -11,11 +11,8 @@ gsap.registerPlugin(useGSAP);
 const mainClipPath =
   '[clip-path:polygon(0_30px,20px_0,100%_0,100%_calc(100%-15px),calc(100%-15px)_100%,0_100%)]';
 
-// Define the custom clip-path for the "ABOUT" header tab
-// This has a single-point trapezoid cut on the right.
 const tabClipPath = '[clip-path:polygon(0_0,calc(100%-15px)_0,100%_100%,0_100%)]';
 
-// Styles for the glowing border effect (blue/cyan)
 const borderStyles = 'shadow-[0_0_10px_2px_rgba(23,170,255,0.7),_0_0_1px_1px_rgba(0,100,255,0.8)_inset]';
 
 export const Events = () => {
