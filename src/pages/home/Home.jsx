@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import ScrollDown from './ScrollDown';
 
 const Home = () => {
   const starsContainerRef = useRef(null);
@@ -202,10 +203,15 @@ const Home = () => {
           alt="Interior of a spaceship cockpit"
         />
 
+
+
         {/* Orbit Rings */}
         <div className="orbit-ring absolute w-[200px] h-[200px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white/10 rounded-full animate-rotate-orbit pointer-events-none hidden md:block md:w-[300px] md:h-[300px]"></div>
         <div className="orbit-ring absolute w-[300px] h-[300px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white/10 rounded-full animate-rotate-orbit pointer-events-none hidden md:block md:w-[450px] md:h-[450px]"
           style={{ animationDuration: '35s', animationDirection: 'reverse' }}></div>
+
+        {/* Scroll Down Animation*/}
+        <ScrollDown />
       </div>
     </div>
   );
