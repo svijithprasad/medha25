@@ -1,36 +1,62 @@
+import './About.css';
+
 export const About = () => {
+  const boxStyle = {
+    '--clip-border-color': '#fff',
+    '--bg-gradient': 'linear-gradient(180deg, rgba(49, 14, 0, 0.40) 0%, rgba(30, 0, 0, 0.40) 100%)'
+  };
+
   return (
-    <div className="uppercase text-4xl text-white flex justify-around items-center absolute inset-0 w-full h-full bg-transparent backdrop-blur-xl z-98">
+    <div className=" flex flex-wrap md:justify-around items-center absolute inset-0 w-full h-full bg-transparent backdrop-blur-xl z-98">
+      <div
+        className="z-100 fookin-a-box aboutPopup is-visible"
+        style={boxStyle}
+      >
+        <h2 className="md:pr-16 pr-9 md:text-lg text-[14px] z-1 p-3 heading-clip-mirrored font-space">
+          <span>About Medha .25</span>
+        </h2>
 
-      <div className="relative w-[400px] h-[400px]">
-        <svg
-          className="shape-svg"
-          width="500"
-          height="500"
-          viewBox="0 0 500 500"
-        >
-          <path
-            d="M 250 0 L 300 60 L 500 60 L 500 500 L 70 500 L 0 430 L 0 0 Z"
-            fill="transparent"
-            stroke="#fff"
-            strokeWidth="2"
-          />
+        <div className="clip-shape-border-mirrored"></div>
 
-          <path
-            d="M 250 0 L 300 60 L 500 60 L 500 500 L 70 500 L 0 430 L 0 0 Z"
-            fill="transparent"
-            stroke="#fff"
-            strokeWidth="2"
-            transform="translate(10, 10) scale(0.96)"
-          />
-
-        </svg>
-
-        <div className="">
-          <p className="text-sm">The dynamic minds of the MCA department at Shree Devi Institute of Technology proudly presents MEDHA 2k25—a fest like no other, blending technology and creativity into an extraordinary experience. A grand spectacle like no other, where the tides of innovation and creativity converge in a breathtaking fusion of technology and artistry. Choose your passion, set a road map and achieve the success. MEDHA 2k25 is where you unleash your true potential!</p>
+        <div className="clip-shape-mirrored -mt-15 p-5">
+          <div className="pt-14 my-2 text-white">
+            <div className="opacity-76 normal-case text-base font-sans">
+              <p className='font-space'>
+                The dynamic minds of the <span className='text-amber-500'>MCA department</span> at <span className='text-blue-400'>Shree Devi Institute of Technology</span> proudly presents <span className='text-amber-500'>MEDHA .25</span> a fest like no other, blending technology and creativity into an extraordinary experience.
+              </p>
+              <br />
+              <p>
+                A grand spectacle like no other, where the tides of innovation and creativity converge in a breathtaking fusion of technology and artistry. Choose your passion, set a road map and achieve the success. <span className='text-amber-500'>MEDHA .25</span> is where you unleash your true potential!
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
+      <div
+        className="z-100 md:block hidden fookin-a-box aboutPopup is-visible"
+        style={boxStyle}
+      >
+        <h2 className="md:pr-16 pr-9 md:text-lg text-[14px] z-1 p-3 heading-clip-mirrored font-space">
+          <span>About SDIT</span>
+        </h2>
+
+        <div className="clip-shape-border-mirrored"></div>
+
+        <div className="clip-shape-mirrored -mt-15 p-5">
+          <div className="pt-14 my-2 text-white">
+            <div className="opacity-76 normal-case text-base font-sans">
+              <p className='font-space'>
+                The dynamic minds of the <span className='text-amber-500'>MCA department</span> at <span className='text-blue-400'>Shree Devi Institute of Technology</span> proudly presents <span className='text-amber-500'>MEDHA .25</span> a fest like no other, blending technology and creativity into an extraordinary experience.
+              </p>
+              <br />
+              <p>
+                A grand spectacle like no other, where the tides of innovation and creativity converge in a breathtaking fusion of technology and artistry. Choose your passion, set a road map and achieve the success. <span className='text-amber-500'>MEDHA .25</span> is where you unleash your true potential!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,135 @@
+::selection {
+  background-color: black;
+  filter: invert(1);
+}
+
+.fookin-a-box {
+  max-width: 360px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 2200px) {
+  .fookin-a-box {
+    max-width: 460px;
+  }
+}
+
+@media (min-width: 992px) {
+  .fookin-a-box {
+    margin: 0;
+  }
+}
+
+.aboutPopup.fookin-a-box {
+  /* pointer-events: none; */
+  opacity: 0;
+  /* position: fixed; */
+  z-index: 11 !important;
+  /* top: 100px; */
+  /* right: 24px; */
+  max-width: 440px;
+  width: calc(100% - 48px);
+  filter: blur(40px);
+  transform: scale(1.4);
+  transform-origin: center;
+  transition: opacity 0.3s ease, filter 0.3s ease 0s, transform 0.3s ease;
+}
+
+.aboutPopup.is-visible {
+  /* pointer-events: auto; */
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+  transition: opacity 0.3s ease, filter 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+}
+
+.clip-shape-border-mirrored {
+  position: absolute;
+  opacity: 1;
+  inset: 0;
+  z-index: -12;
+  max-width: 100%;
+  background-color: var(--clip-border-color);
+  clip-path: polygon(
+    calc(100% - 0px) 30px, calc(100% - 0px) calc(100% - 61px),
+    calc(100% - 53px) calc(100% - 0px), 0px calc(100% - 0px),
+    0px 62px, calc(100% - 175px) 62px, calc(100% - 144px) 30px,
+    calc(100% - 0px) 30px, calc(100% - 144px) 31px, calc(100% - 175px) 63px,
+    1px 63px, 1px calc(100% - 1px), calc(100% - 53px) calc(100% - 1px),
+    calc(100% - 1px) calc(100% - 61px), calc(100% - 1px) 31px,
+    calc(100% - 144px) 31px
+  );
+}
+
+.clip-shape-mirrored {
+  user-select: text;
+  isolation: isolate;
+  position: relative;
+  max-width: 100%;
+  backdrop-filter: blur(22px);
+  background: var(--bg-gradient);
+  clip-path: polygon(
+    calc(100% - 10px) 40px, calc(100% - 10px) calc(100% - 65px),
+    calc(100% - 57px) calc(100% - 10px), 10px calc(100% - 10px),
+    10px 72px, calc(100% - 171px) 72px, calc(100% - 139px) 40px
+  );
+}
+
+.clip-shape-mirrored:after {
+  position: absolute;
+  background-color: var(--clip-border-color);
+  z-index: 2;
+  inset: 0;
+  content: '';
+  clip-path: polygon(
+    calc(100% - 10px) 40px, calc(100% - 10px) calc(100% - 65px),
+    calc(100% - 57px) calc(100% - 10px), 10px calc(100% - 10px),
+    10px 72px, calc(100% - 172px) 72px, calc(100% - 140px) 40px,
+    calc(100% - 10px) 40px,
+
+    calc(100% - 139px) 41px, calc(100% - 171px) 73px,
+    11px 73px, 11px calc(100% - 11px), calc(100% - 58px) calc(100% - 11px),
+    calc(100% - 11px) calc(100% - 66px), calc(100% - 11px) 41px,
+    calc(100% - 139px) 41px,
+    calc(100% - 10px) 40px
+  );
+}
+
+.heading-clip-mirrored {
+  position: relative;
+  background: var(--bg-gradient);
+  backdrop-filter: blur(22px);
+  height: 62px;
+  margin: 0;
+  line-height: 1;
+  clip-path: polygon(
+    calc(100% - 144px) 0, calc(100% - 144px) 30px,
+    calc(100% - 176px) 100%, 0% 100%, 0% 0%
+  );
+  border-left: 1px solid var(--clip-border-color);
+  border-top: 1px solid var(--clip-border-color);
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  text-transform: uppercase;
+  color: white;
+  font-weight: 600;
+}
+
+.heading-clip-mirrored span {
+  display: inline-block;
+  text-align: center;
+  width: calc(110% - 144px);
+}
+
+
+.heading-clip-mirrored::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 144px;
+  width: 1px;
+  height: 30px;
+  background-color: var(--clip-border-color);
+}
