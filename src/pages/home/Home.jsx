@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SocialBar from "../../components/SocialBar";
+import { useMediaQuery } from "react-responsive";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -17,11 +18,14 @@ const Home = () => {
   const feat1Ref = useRef(null);
   const feat2Ref = useRef(null);
 
+  // Fixed media query - use the hook directly in component
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+
   useGSAP(() => {
     const el1 = astronautRef.current;
 
     const scene1 = gsap.to(el1, {
-      top: "2600px",
+      top: !isMobile ? "2600px" : "2300px",
       scale: 10,
       duration: 500,
       scrollTrigger: {
@@ -37,8 +41,6 @@ const Home = () => {
 
     const scene2 = gsap.to(el2, {
       opacity: 1,
-      // display: "block",
-      // scale: 10,
       duration: 500,
       scrollTrigger: {
         trigger: document.body,
@@ -51,45 +53,64 @@ const Home = () => {
 
     const el3 = feat1Ref.current;
 
-    const scene3 = gsap.to(el3, {
-      scale: 1,
-      opacity: 1,
-      // display: "block",
-      // scale: 10,
-      duration: 500,
+    const scene3 = gsap.timeline({
       scrollTrigger: {
         trigger: document.body,
         start: "26%",
-        end: "50%",
+        end: "46%",
         scrub: 2,
         markers: true,
       }
     });
 
-    // const el4 = feat2Ref.current;
+    // Zoom in
+    scene3.to(el3, {
+      scale: isMobile ? 3 : 1,
+      opacity: 1,
+      duration: 500,
+    });
 
-    // const scene4 = gsap.to(el4, {
-    //   opacity: 1,
-    //   // display: "block",
-    //   // scale: 10,
-    //   duration: 500,
-    //   scrollTrigger: {
-    //     trigger: document.body,
-    //     start: "5%",
-    //     end: "25%",
-    //     scrub: 2,
-    //     markers: true,
-    //   }
-    // });
+    // Zoom out
+    scene3.to(el3, {
+      scale: .5,
+      opacity: 0,
+      duration: 500
+    });
+
+    const el4 = feat2Ref.current;
+
+    const scene4 = gsap.timeline({
+      scrollTrigger: {
+        trigger: document.body,
+        start: "47%",
+        end: "67%",
+        scrub: 2,
+        markers: true,
+      }
+    });
+
+    // Zoom in
+    scene4.to(el4, {
+      scale: isMobile ? 3 : 1,
+      opacity: 1,
+      duration: 500,
+    });
+
+    // Zoom out
+    scene4.to(el4, {
+      scale: .5,
+      opacity: 0,
+      duration: 500
+    });
 
     return () => {
       scene1.kill();
       scene2.kill();
       scene3.kill();
-      // scene4.kill();
+      scene4.kill();
     }
 
-  }, []);
+  }, [isMobile]); // Add isMobile as dependency
 
   const createStars = () => {
     const starsContainer = starsContainerRef.current;
@@ -221,7 +242,7 @@ const Home = () => {
 
       <div
         ref={splashContainerRef}
-        className="relative w-screen h-[300vh] overflow-scroll bg-[#152448] bg-cover bg-center bg-no-repeat bg-blend-overlay"
+        className="relative w-screen h-[350vh] overflow-scroll bg-[#152448] bg-cover bg-center bg-no-repeat bg-blend-overlay"
         style={{
           backgroundImage: `linear-gradient(circle at 50% 30%,rgb(238, 37, 15) 0%,rgb(241, 29, 54) 80%,rgb(248, 0, 50) 100%), url('./home-cloud.webp')`,
         }}
@@ -233,11 +254,11 @@ const Home = () => {
           className="fixed h-screen w-screen bg-gray-950 z-95 opacity-0">
         </div>
 
-        <div ref={feat1Ref} class="fixed opacity-0 inset-0 scale-60 flex z-96 items-center justify-center">
+        <div ref={feat1Ref} className="fixed opacity-0 inset-0 scale-60 flex z-96 items-center justify-center">
           <img src="feat1.jpg" alt="" />
         </div>
 
-        <div ref={feat2Ref} class="fixed hidden inset-0 scale-100 flex z-96 items-center justify-center">
+        <div ref={feat2Ref} className="fixed opacity-0 inset-0 scale-75 flex z-96 items-center justify-center">
           <img src="feat3.jpg" alt="" />
         </div>
 
@@ -317,7 +338,6 @@ const Home = () => {
           style={{ animationDuration: '35s', animationDirection: 'reverse' }}></div>
 
         <ScrollDown />
-        <SocialBar />
       </div>
     </div>
   );

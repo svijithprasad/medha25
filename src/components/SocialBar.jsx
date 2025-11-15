@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { House, LucideNewspaper, PartyPopper, Stars } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function SocialBar() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -11,7 +13,7 @@ export default function SocialBar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[9999]"
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-9999"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -45,9 +47,9 @@ export default function SocialBar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ x: 60, opacity: 0, scale: 0.95 }}
-            animate={{ x: 0, opacity: 1, scale: 1 }}
-            exit={{ x: 60, opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
             transition={{
               type: "spring",
               stiffness: 90,
@@ -60,8 +62,9 @@ export default function SocialBar() {
             {/* === 4 Quadrants === */}
             <div className="flex flex-col gap-3">
               <div className="flex gap-3">
-                {/* INSTAGRAM */}
+                {/* Home */}
                 <button
+                  onClick={() => { setOpen(false), navigate("/") }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[90px_5px_5px_5px] border-[3px] border-[#2d2d2d]
                   shadow-[6px_6px_0px_#2d2d2d] pt-3 pl-3 flex items-center justify-center
@@ -71,21 +74,23 @@ export default function SocialBar() {
                   <House size={30} className="group-hover:text-white" />
                 </button>
 
-                {/* TWITTER */}
+                {/* Events */}
                 <button
+                  onClick={() => { setOpen(false), navigate("/events") }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[5px_90px_5px_5px] border-[3px] border-[#2d2d2d]
                   shadow-[6px_6px_0px_#2d2d2d] pt-3 pr-3 flex items-center justify-center
                   transition-all duration-100 hover:-translate-x-1.5 hover:-translate-y-1.5
                   hover:shadow-[12px_12px_0px_#2d2d2d] hover:bg-[#24a0ed]"
                 >
-                  <PartyPopper size={30} className="group-hover:text-white"/>
+                  <PartyPopper size={30} className="group-hover:text-white" />
                 </button>
               </div>
 
               <div className="flex gap-3">
-                {/* GITHUB */}
+                {/* Glimpse */}
                 <button
+                  onClick={() => { setOpen(false), navigate("/glimpse") }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[5px_5px_5px_90px] border-[3px] border-[#2d2d2d]
                   shadow-[6px_6px_0px_#2d2d2d] pb-2.5 pl-3 flex items-center justify-center
@@ -95,8 +100,9 @@ export default function SocialBar() {
                   <Stars size={30} className="group-hover:text-white" />
                 </button>
 
-                {/* WHATSAPP */}
+                {/* Brochure */}
                 <button
+                  onClick={() => { setOpen(false), navigate("/brochure") }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[5px_5px_90px_5px] border-[3px] border-[#2d2d2d]
                   shadow-[6px_6px_0px_#2d2d2d] pb-3 pr-3 flex items-center justify-center
