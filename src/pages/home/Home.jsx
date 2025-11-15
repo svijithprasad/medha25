@@ -12,7 +12,10 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const Home = () => {
   const starsContainerRef = useRef(null);
   const splashContainerRef = useRef(null);
+  const overlayRef = useRef(null);
   const astronautRef = useRef(null);
+  const feat1Ref = useRef(null);
+  const feat2Ref = useRef(null);
 
   useGSAP(() => {
     const el1 = astronautRef.current;
@@ -30,8 +33,60 @@ const Home = () => {
       }
     });
 
+    const el2 = overlayRef.current;
+
+    const scene2 = gsap.to(el2, {
+      opacity: 1,
+      // display: "block",
+      // scale: 10,
+      duration: 500,
+      scrollTrigger: {
+        trigger: document.body,
+        start: "5%",
+        end: "25%",
+        scrub: 2,
+        markers: true,
+      }
+    });
+
+    const el3 = feat1Ref.current;
+
+    const scene3 = gsap.to(el3, {
+      scale: 1,
+      opacity: 1,
+      // display: "block",
+      // scale: 10,
+      duration: 500,
+      scrollTrigger: {
+        trigger: document.body,
+        start: "26%",
+        end: "50%",
+        scrub: 2,
+        markers: true,
+      }
+    });
+
+    // const el4 = feat2Ref.current;
+
+    // const scene4 = gsap.to(el4, {
+    //   opacity: 1,
+    //   // display: "block",
+    //   // scale: 10,
+    //   duration: 500,
+    //   scrollTrigger: {
+    //     trigger: document.body,
+    //     start: "5%",
+    //     end: "25%",
+    //     scrub: 2,
+    //     markers: true,
+    //   }
+    // });
+
     return () => {
       scene1.kill();
+      scene2.kill();
+      scene3.kill();
+      // scene4.kill();
     }
 
   }, []);
@@ -172,10 +227,22 @@ const Home = () => {
         }}
       >
 
-        {/* Featuring Section */}
-        {/* <div className="fixed h-screen w-screen bg-gray-950/90 z-99">
+        {/* Featuring Section Start*/}
+        <div
+          ref={overlayRef}
+          className="fixed h-screen w-screen bg-gray-950 z-95 opacity-0">
+        </div>
 
-        </div> */}
+        <div ref={feat1Ref} class="fixed opacity-0 inset-0 scale-60 flex z-96 items-center justify-center">
+          <img src="feat1.jpg" alt="" />
+        </div>
+
+        <div ref={feat2Ref} class="fixed hidden inset-0 scale-100 flex z-96 items-center justify-center">
+          <img src="feat3.jpg" alt="" />
+        </div>
+
+        {/* Featuring Section End*/}
+
 
         {/* Glow Overlay */}
         <div className="absolute inset-0 z-10 pointer-events-none animate-glow-pulse bg-radial-gradient"

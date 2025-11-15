@@ -47,9 +47,9 @@ export const Events = () => {
   const events = [
     { name: "Astrinix", img: "/events/img/e1.png" },
     { name: "Tech Blitz", img: "/events/img/e2.png" },
-    { name: "Galactic Rise", img: "/events/img/e3.png" },
     { name: "Reel Verse", img: "/events/img/e4.png" },
-    { name: "Stellar", img: "/events/img/e5.png" },
+    { name: "Galactic Rise", img: "/events/img/e3.png" },
+    { name: "Stellar X", img: "/events/img/e5.png" },
     { name: "Tech Nova", img: "/events/img/e6.png" },
     { name: "Chrono Cipher", img: "/events/img/e7.png" },
     { name: "Time Nova", img: "/events/img/e8.png" }
