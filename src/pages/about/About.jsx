@@ -38,7 +38,7 @@ export const About = () => {
         style={boxStyle}
       >
         <h2 className="md:pr-16 pr-9 md:text-lg text-[14px] z-1 p-3 heading-clip-mirrored font-space">
-          <span>About SDIT</span>
+          <span>About College</span>
         </h2>
 
         <div className="clip-shape-border-mirrored"></div>
