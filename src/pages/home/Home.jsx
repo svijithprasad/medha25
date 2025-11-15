@@ -13,26 +13,27 @@ const Home = () => {
   const splashContainerRef = useRef(null);
   const astronautRef = useRef(null);
 
-  // useGSAP(() => {
-  //   const el1 = astronautRef.current;
+  useGSAP(() => {
+    const el1 = astronautRef.current;
 
-  //   const scene1 = gsap.to(el1, {
-  //     scale: 2,
-  //     duration: 500,
-  //     scrollTrigger: {
-  //       trigger: document.body,
-  //       start: "top top",
-  //       end: "500px",
-  //       scrub: true,
-  //       markers: true,
-  //     }
-  //   });
+    const scene1 = gsap.to(el1, {
+      top: "2600px",
+      scale: 10,
+      duration: 500,
+      scrollTrigger: {
+        trigger: document.body,
+        start: "top top",
+        end: "500px",
+        scrub: 2,
+        markers: true,
+      }
+    });
 
-  //   return () => {
-  //     scene1.kill();
-  //   }
+    return () => {
+      scene1.kill();
+    }
 
-  // }, []);
+  }, []);
 
   const createStars = () => {
     const starsContainer = starsContainerRef.current;
