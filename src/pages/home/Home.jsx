@@ -129,9 +129,9 @@ const Home = () => {
       }px)`;
     }
 
-    if (astronaut) {
-      astronaut.style.transform = `translate(calc(-50% + ${mouseX * 15 - 7.5}px), calc(-50% + ${mouseY * 15 - 7.5}px))`;
-    }
+    // if (astronaut) {
+    //   astronaut.style.transform = `translate(calc(-50% + ${mouseX * 15 - 7.5}px), calc(-50% + ${mouseY * 15 - 7.5}px))`;
+    // }
   };
 
   useEffect(() => {
