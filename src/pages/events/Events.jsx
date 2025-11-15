@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { Contact } from "./Contact";
 import { About } from "../about/About";
 
+import desappearance from "../../assets/desappearance.mp3"
+import scifi from "../../assets/scifi.mp3"
+
 gsap.registerPlugin(useGSAP);
 
 const mainClipPath =
@@ -19,6 +22,8 @@ const borderStyles = 'shadow-[0_0_10px_2px_rgba(23,170,255,0.7),_0_0_1px_1px_rgb
 
 export const Events = () => {
   const navigate = useNavigate();
+  const audio = new Audio(desappearance);
+  const scifiAudio = new Audio(scifi);
 
   const backgroundLayers = [
     { src: "/2.png.webp", alt: "Stars", zIndex: 1 },
@@ -33,17 +38,6 @@ export const Events = () => {
     { src: "indica-product.webp", alt: "Event 1", zIndex: 1 },
   ]
 
-  // const events = [
-  //   { name: "Code + Web" },
-  //   { name: "IT Quiz" },
-  //   { name: "Reels" },
-  //   { name: "IT Manager" },
-  //   { name: "Tech Tarot" },
-  //   { name: "Tech Talk" },
-  //   { name: "Disruption Room" },
-  //   { name: "Predict Past" },
-  // ]
-
   const events = [
     { name: "Astrinix", img: "/events/img/e1.png" },
     { name: "Tech Blitz", img: "/events/img/e2.png" },
@@ -57,7 +51,6 @@ export const Events = () => {
 
   const eventRef = useRef(null);
   const textRef = useRef(null);
-  const defaultAnimation = useRef(null);
   const sectionRef = useRef(null);
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -79,12 +72,9 @@ export const Events = () => {
   const runScrollAnimation = (callback, zVal) => {
     if (!eventRef.current) return;
 
-    defaultAnimation.current?.kill();
-
     const tl = gsap.timeline({
       onComplete: () => {
         callback();
-        runDefaultAnimation();
       }
     });
 
@@ -117,25 +107,13 @@ export const Events = () => {
     });
   };
 
-  const runDefaultAnimation = () => {
-    defaultAnimation.current?.kill();
-
-    defaultAnimation.current = gsap.to(eventRef.current, {
-      y: -20,
-      x: -20,
-      duration: 3,
-      ease: "power1.inOut",
-      repeat: -1,
-      yoyo: true,
-      repeatDelay: 0
-    });
-  };
-
   const handleScrollRight = () => {
+    audio.play();
     runScrollAnimation(() => setCurrentIndex((prev) => (prev + 1) % events.length), 50);
   };
 
   const handleScrollLeft = () => {
+    audio.play();
     runScrollAnimation(() => setCurrentIndex((prev) => (prev - 1 + events.length) % events.length), -50);
   };
 
@@ -184,8 +162,6 @@ export const Events = () => {
   const visibleEvents = getVisibleEvents();
 
   useGSAP(() => {
-    runDefaultAnimation();
-
     gsap.to(textRef.current, {
       x: "-100vw",
       duration: 20,
@@ -294,8 +270,8 @@ export const Events = () => {
       <Contact />
 
       <button
-        className="absolute bg-gray-200 px-2 py-1 rounded-xl uppercase cursor-pointer text-xl bottom-3 right-6 z-99 tracking-wider border-2 border-gray-800 text-shadow-gray-600 font-bold hover:scale-110"
-        onClick={() => { setModal(!modal) }}
+        className="absolute bg-gray-200 px-2 py-1 rounded-xl uppercase cursor-pointer text-xl bottom-3 right-6 z-9999 tracking-wider border-2 border-gray-800 text-shadow-gray-600 font-bold hover:scale-110"
+        onClick={() => { scifiAudio.play(), setModal(!modal) }}
       >
         {modal ? "Close" : "About"}
       </button>

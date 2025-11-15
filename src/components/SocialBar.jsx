@@ -2,10 +2,15 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { House, LucideNewspaper, PartyPopper, Stars } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import beep from "../assets/beep.mp3"
+import zap from "../assets/zap.mp3"
 
 export default function SocialBar() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+
+  const beepAudio = new Audio(beep);
+  const zapAudio = new Audio(zap);
 
   return (
     <>
@@ -18,14 +23,14 @@ export default function SocialBar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            onClick={() => setOpen(false)}
+            onClick={() => { beepAudio.play(), setOpen(false) }}
           />
         )}
       </AnimatePresence>
 
       {/* === RIGHT MENU BUTTON === */}
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => { beepAudio.play(), setOpen(!open) }}
         className="fixed right-0 top-1/2 -translate-y-1/2 bg-white shadow-xl 
              rounded-l-full w-12 h-24 flex items-center justify-center 
              border border-gray-300 z-99999 cursor-pointer hover:bg-gray-100"
@@ -35,7 +40,7 @@ export default function SocialBar() {
 
       {/* === LEFT MENU BUTTON === */}
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => { beepAudio.play(), setOpen(!open) }}
         className="fixed left-0 top-1/2 -translate-y-1/2 bg-white shadow-xl 
              rounded-r-full w-12 h-24 flex items-center justify-center 
              border border-gray-300 z-99999 cursor-pointer hover:bg-gray-100"
@@ -64,7 +69,7 @@ export default function SocialBar() {
               <div className="flex gap-3">
                 {/* Home */}
                 <button
-                  onClick={() => { setOpen(false), navigate("/") }}
+                  onClick={() => { zapAudio.play(), setOpen(false), navigate("/") }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[90px_5px_5px_5px] border-[3px] border-[#2d2d2d]
                   shadow-[6px_6px_0px_#2d2d2d] pt-3 pl-3 flex items-center justify-center
@@ -76,7 +81,7 @@ export default function SocialBar() {
 
                 {/* Events */}
                 <button
-                  onClick={() => { setOpen(false), navigate("/events") }}
+                  onClick={() => { zapAudio.play(), setOpen(false), navigate("/events") }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[5px_90px_5px_5px] border-[3px] border-[#2d2d2d]
                   shadow-[6px_6px_0px_#2d2d2d] pt-3 pr-3 flex items-center justify-center
@@ -90,7 +95,7 @@ export default function SocialBar() {
               <div className="flex gap-3">
                 {/* Glimpse */}
                 <button
-                  onClick={() => { setOpen(false), navigate("/glimpse") }}
+                  onClick={() => { zapAudio.play(), setOpen(false), navigate("/glimpse") }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[5px_5px_5px_90px] border-[3px] border-[#2d2d2d]
                   shadow-[6px_6px_0px_#2d2d2d] pb-2.5 pl-3 flex items-center justify-center
@@ -102,7 +107,7 @@ export default function SocialBar() {
 
                 {/* Brochure */}
                 <button
-                  onClick={() => { setOpen(false), navigate("/brochure") }}
+                  onClick={() => { zapAudio.play(), setOpen(false), navigate("/brochure") }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[5px_5px_90px_5px] border-[3px] border-[#2d2d2d]
                   shadow-[6px_6px_0px_#2d2d2d] pb-3 pr-3 flex items-center justify-center

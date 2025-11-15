@@ -14,8 +14,8 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const events = [
   { name: "Astrinix", img: "/events/img/e1.png" },
   { name: "Tech Blitz", img: "/events/img/e2.png" },
-  { name: "Galactic Rise", img: "/events/img/e3.png" },
   { name: "Reel Verse", img: "/events/img/e4.png" },
+  { name: "Galactic Rise", img: "/events/img/e3.png" },
   { name: "Stellar", img: "/events/img/e5.png" },
   { name: "Tech Nova", img: "/events/img/e6.png" },
   { name: "Chrono Cipher", img: "/events/img/e7.png" },
@@ -72,7 +72,7 @@ export const Event = () => {
 
     const el3 = astronautRef.current;
 
-    const scene2 = gsap.to([el3],
+    const scene2 = gsap.to(el3,
       {
         scale: 0.4,
         translateY: 120,
@@ -120,7 +120,7 @@ export const Event = () => {
       scene3.kill();
       scene4.kill();
     }
-  }, []);
+  });
   // GSAP END
 
   return (
@@ -160,7 +160,7 @@ export const Event = () => {
       {/* Floating Astronaut */}
       <img
         ref={astronautRef}
-        className="fixed bottom-0 left-0 md:scale-25 scale-40 md:translate-y-120 translate-y-30 md:translate-x-78 transition ease-in-out"
+        className="fixed bottom-0 left-0 md:scale-25 scale-40 md:translate-y-120 translate-y-30 md:translate-x-78"
         src={images[2].src}
         alt={images[2].alt}
         style={{ zIndex: images[1].zIndex }}
