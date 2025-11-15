@@ -113,10 +113,10 @@ html, body{
   100% { transform: translateX(-400px) translateY(400px) rotate(-45deg); opacity: 0; }
 }
 
-@keyframes floatAstronaut {
+/* @keyframes floatAstronaut {
   0%, 100% { transform: translate(-50%, -50%) translateY(0); }
   50% { transform: translate(-50%, -50%) translateY(-15px); }
-}
+} */
 
 @keyframes marquee {
   0% { transform: translateX(0); }
@@ -136,7 +136,7 @@ html, body{
 /* Simple Animation Classes */
 .animate-twinkle { animation: twinkle 3s infinite; }
 .animate-shooting-star { animation: shootingStar 4s linear infinite; }
-.animate-float-astronaut { animation: floatAstronaut 6s ease-in-out infinite; }
+/* .animate-float-astronaut { animation: floatAstronaut 6s ease-in-out infinite; } */
 .animate-marquee { animation: marquee 70s linear infinite; }
 .animate-slow-spin { animation: slow-spin 70s linear infinite; }
 .animate-pulse-custom { animation: pulse 8s ease-in-out infinite; }
