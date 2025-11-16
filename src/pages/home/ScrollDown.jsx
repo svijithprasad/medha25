@@ -7,7 +7,7 @@ const ScrollDown = () => {
         <span className="mouse-btn">
           <span className="mouse-scroll" />
         </span>
-        <span className='text-white text-shadow-lg select-none'>Scroll Down</span>
+        <span className='text-white text-shadow-lg select-none font-space!'>Scroll Down</span>
       </div>
     </StyledWrapper>
   );

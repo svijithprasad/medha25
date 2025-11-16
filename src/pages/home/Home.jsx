@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollDown from "./ScrollDown";
+import { Contact } from "./Contact";
 
 // GSAP
 import gsap from "gsap";
@@ -107,8 +108,8 @@ const Home = () => {
     // Add scroll trigger for navigation at the end
     ScrollTrigger.create({
       trigger: document.body,
-      start: "bottom bottom",
-      end: "bottom bottom",
+      start: "68%",
+      end: "75%",
       onEnter: () => {
         navigate("/events");
       },
@@ -350,6 +351,7 @@ const Home = () => {
           style={{ animationDuration: '35s', animationDirection: 'reverse' }}></div>
 
         <ScrollDown />
+        <Contact />
       </div>
     </div>
   );
