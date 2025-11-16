@@ -1,5 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-// import SplashPage from './pages/home/SplashPage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Events } from './pages/events/Events';
 import { Event } from './pages/Event/Event';

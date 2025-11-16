@@ -19,6 +19,11 @@ const Home = () => {
   const astronautRef = useRef(null);
   const feat1Ref = useRef(null);
   const feat2Ref = useRef(null);
+  const feat3Ref = useRef(null);
+  const feat4Ref = useRef(null);
+  const feat5Ref = useRef(null);
+
+  const [devMode, setDevMode] = useState(false);
 
   // Fixed media query - use the hook directly in component
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
@@ -28,14 +33,14 @@ const Home = () => {
 
     const scene1 = gsap.to(el1, {
       top: !isMobile ? "2600px" : "2300px",
-      scale: 10,
+      scale: isMobile ? 15 : 10,
       duration: 500,
       scrollTrigger: {
         trigger: document.body,
         start: "top top",
         end: "30%",
         scrub: 2,
-        markers: true,
+        markers: devMode,
       }
     });
 
@@ -49,57 +54,125 @@ const Home = () => {
         start: "5%",
         end: "25%",
         scrub: 2,
-        markers: true,
+        markers: devMode,
       }
     });
 
+    // Feature 1 - Responsive animation
     const el3 = feat1Ref.current;
-
     const scene3 = gsap.timeline({
       scrollTrigger: {
         trigger: document.body,
-        start: "26%",
-        end: "46%",
+        start: isMobile ? "26%" : "26%",
+        end: isMobile ? "32%" : "32%",
         scrub: 2,
-        markers: true,
+        markers: devMode,
       }
     });
 
-    // Zoom in
     scene3.to(el3, {
-      scale: isMobile ? 3 : 1.3,
+      scale: isMobile ? 2.5 : 1.3,
       opacity: 1,
       duration: 500,
     });
 
-    // Zoom out
     scene3.to(el3, {
       scale: .5,
       opacity: 0,
       duration: 500
     });
 
+    // Feature 2 - Responsive animation
     const el4 = feat2Ref.current;
-
     const scene4 = gsap.timeline({
       scrollTrigger: {
         trigger: document.body,
-        start: "47%",
-        end: "67%",
+        start: isMobile ? "33%" : "33%",
+        end: isMobile ? "39%" : "39%",
         scrub: 2,
-        markers: true,
+        markers: devMode,
       }
     });
 
-    // Zoom in
     scene4.to(el4, {
-      scale: isMobile ? 3 : 1,
+      scale: isMobile ? 2.5 : 1,
       opacity: 1,
       duration: 500,
     });
 
-    // Zoom out
     scene4.to(el4, {
+      scale: .5,
+      opacity: 0,
+      duration: 500
+    });
+
+    // Feature 3 - Responsive text animation
+    const el5 = feat3Ref.current;
+    const scene5 = gsap.timeline({
+      scrollTrigger: {
+        trigger: document.body,
+        start: isMobile ? "40%" : "40%",
+        end: isMobile ? "46%" : "46%",
+        scrub: 2,
+        markers: devMode,
+      }
+    });
+
+    scene5.to(el5, {
+      scale: isMobile ? 1.8 : 1,
+      opacity: 1,
+      duration: 500,
+    });
+
+    scene5.to(el5, {
+      scale: .5,
+      opacity: 0,
+      duration: 500
+    });
+
+    // Feature 4 - Responsive text animation
+    const el6 = feat4Ref.current;
+    const scene6 = gsap.timeline({
+      scrollTrigger: {
+        trigger: document.body,
+        start: isMobile ? "47%" : "47%",
+        end: isMobile ? "53%" : "53%",
+        scrub: 2,
+        markers: devMode,
+      }
+    });
+
+    scene6.to(el6, {
+      scale: isMobile ? 1.8 : 1,
+      opacity: 1,
+      duration: 500,
+    });
+
+    scene6.to(el6, {
+      scale: .5,
+      opacity: 0,
+      duration: 500
+    });
+
+    // Feature 5 - Responsive animation with button scaling
+    const el7 = feat5Ref.current;
+    const scene7 = gsap.timeline({
+      scrollTrigger: {
+        trigger: document.body,
+        start: isMobile ? "54%" : "54%",
+        end: isMobile ? "67%" : "67%",
+        scrub: 2,
+        markers: devMode,
+      }
+    });
+
+    scene7.to(el7, {
+      scale: isMobile ? 1.6 : 1,
+      opacity: 1,
+      duration: 500,
+    });
+
+    scene7.to(el7, {
       scale: .5,
       opacity: 0,
       duration: 500
@@ -108,8 +181,8 @@ const Home = () => {
     // Add scroll trigger for navigation at the end
     ScrollTrigger.create({
       trigger: document.body,
-      start: "68%",
-      end: "75%",
+      start: isMobile ? "68%" : "68%",
+      end: isMobile ? "75%" : "75%",
       onEnter: () => {
         navigate("/events");
       },
@@ -123,15 +196,18 @@ const Home = () => {
       scene2.kill();
       scene3.kill();
       scene4.kill();
+      scene5.kill();
+      scene6.kill();
+      scene7.kill();
     }
 
-  }, [isMobile, navigate]); // Add navigate as dependency
+  }, [isMobile, navigate]);
 
   const createStars = () => {
     const starsContainer = starsContainerRef.current;
     if (!starsContainer) return;
 
-    const starCount = 300;
+    const starCount = isMobile ? 200 : 300; // Fewer stars on mobile for performance
 
     for (let i = 0; i < starCount; i++) {
       const star = document.createElement("div");
@@ -145,11 +221,11 @@ const Home = () => {
         const sizeRandom = Math.random();
         let size;
         if (sizeRandom > 0.9) {
-          size = Math.random() * 2 + 2;
+          size = Math.random() * (isMobile ? 1.5 : 2) + (isMobile ? 1 : 2);
         } else if (sizeRandom > 0.7) {
-          size = Math.random() * 1 + 1.5;
+          size = Math.random() * (isMobile ? 0.8 : 1) + (isMobile ? 1 : 1.5);
         } else {
-          size = Math.random() * 0.5 + 1;
+          size = Math.random() * (isMobile ? 0.3 : 0.5) + (isMobile ? 0.8 : 1);
         }
         star.style.width = `${size}px`;
         star.style.height = `${size}px`;
@@ -179,7 +255,7 @@ const Home = () => {
     const container = splashContainerRef.current;
     if (!container) return;
 
-    const particleCount = 10;
+    const particleCount = isMobile ? 6 : 10; // Fewer particles on mobile
 
     for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement("div");
@@ -196,39 +272,36 @@ const Home = () => {
   };
 
   const handleMouseMove = (e) => {
+    if (isMobile) return; // Disable mouse move effects on mobile
+
     const mouseX = e.clientX / window.innerWidth;
     const mouseY = e.clientY / window.innerHeight;
 
     const planet = document.querySelector(".planet-bg");
     const planetSurface = document.querySelector(".planet-surface");
     const rocks = document.querySelector(".floating-rocks");
-    const astronaut = document.querySelector(".astronaut");
 
     if (planet) {
       planet.style.transform = `translateX(calc(-50% + ${mouseX * 20 - 10}px))`;
     }
 
     if (planetSurface) {
-      planetSurface.style.transform = `translateX(calc(-50% + ${mouseX * 30 - 15
-        }px))`;
+      planetSurface.style.transform = `translateX(calc(-50% + ${mouseX * 30 - 15}px))`;
     }
 
     if (rocks) {
-      rocks.style.transform = `translate(${mouseX * 10 - 5}px, ${mouseY * 10 - 5
-        }px)`;
+      rocks.style.transform = `translate(${mouseX * 10 - 5}px, ${mouseY * 10 - 5}px)`;
     }
-
-    // if (astronaut) {
-    //   astronaut.style.transform = `translate(calc(-50% + ${mouseX * 15 - 7.5}px), calc(-50% + ${mouseY * 15 - 7.5}px))`;
-    // }
   };
 
   useEffect(() => {
     createStars();
     createParticles();
 
-    // Add event listeners
-    document.addEventListener('mousemove', handleMouseMove);
+    // Add event listeners only for non-mobile
+    if (!isMobile) {
+      document.addEventListener('mousemove', handleMouseMove);
+    }
 
     const handleResize = () => {
       const starsContainer = starsContainerRef.current;
@@ -250,19 +323,17 @@ const Home = () => {
       document.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <div id="main-content" className="w-full h-full">
-
       <div
         ref={splashContainerRef}
-        className="relative w-screen h-[350vh] overflow-scroll bg-[#152448] bg-cover bg-center bg-no-repeat bg-blend-overlay"
+        className="relative w-screen h-[250vh] overflow-scroll bg-[#152448] bg-cover bg-center bg-no-repeat bg-blend-overlay"
         style={{
           backgroundImage: `linear-gradient(circle at 50% 30%,rgb(238, 37, 15) 0%,rgb(241, 29, 54) 80%,rgb(248, 0, 50) 100%), url('./home-cloud.webp')`,
         }}
       >
-
         {/* Featuring Section Start*/}
         <div
           ref={overlayRef}
@@ -270,15 +341,71 @@ const Home = () => {
         </div>
 
         <div ref={feat1Ref} className="fixed opacity-0 inset-0 scale-60 flex z-96 items-center justify-center">
-          <img src="feat1.jpg" alt="" />
+          <img
+            src="feat1.jpg"
+            alt=""
+            className={isMobile ? "max-w-[90%] max-h-[60%] object-contain" : ""}
+          />
         </div>
 
         <div ref={feat2Ref} className="fixed opacity-0 inset-0 scale-75 flex z-96 items-center justify-center">
-          <img src="feat3.jpg" alt="" />
+          <img
+            src="feat3.jpg"
+            alt=""
+            className={isMobile ? "max-w-[90%] max-h-[60%] object-contain" : ""}
+          />
+        </div>
+
+        {/* New Feature Sections */}
+        <div ref={feat3Ref} className="fixed opacity-0 inset-0 scale-75 flex z-96 items-center justify-center">
+          <div className="text-center text-white px-4">
+            <h1 className={`font-bold mb-4 bg-linear-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
+              }`}>
+              Department of MCA Presents
+            </h1>
+            <p className={`font-light text-gray-200 ${isMobile ? "text-xl" : "text-3xl"
+              }`}>
+              National Level Technical & Cultural Fest
+            </p>
+          </div>
+        </div>
+
+        <div ref={feat4Ref} className="fixed opacity-0 inset-0 scale-75 flex z-96 items-center justify-center">
+          <div className="text-center text-white px-4">
+            <h1 className={`font-bold mb-4 bg-linear-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
+              }`}>
+              When?
+            </h1>
+            <p className={`font-light text-gray-200 ${isMobile ? "text-xl" : "text-3xl"
+              }`}>
+              December 3rd & 4th
+            </p>
+          </div>
+        </div>
+
+        <div ref={feat5Ref} className="fixed opacity-0 inset-0 scale-75 flex z-96 items-center justify-center">
+          <div className="text-center text-white px-4">
+            <h1 className={`font-bold mb-4 bg-linear-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
+              }`}>
+              Where?
+            </h1>
+            <p className={`font-light text-gray-200 mb-8 ${isMobile ? "text-xl" : "text-3xl"
+              }`}>
+              Shree Devi Institute of Technology, Kenjar
+            </p>
+            <div className={`flex gap-8 justify-center ${isMobile ? "flex-col gap-4 items-center" : "flex-row"
+              }`}>
+              <button className="px-8 py-4 bg-linear-to-r from-[#83EFFF] to-[#0EA5E9] hover:from-[#67D8FF] hover:to-[#0284C7] text-gray-900/90 font-bold rounded-lg border-2 border-[#83EFFF] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
+                Technical Events
+              </button>
+              <button className="px-8 py-4 bg-linear-to-r from-[#FFDE1C] via-[#FDC700] to-[#F1B200] hover:from-[#FFE55C] hover:via-[#FFD700] hover:to-[#F1B200] text-gray-900/90 font-bold rounded-lg border-2 border-[#FFDE1C] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
+                Cultural Events
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Featuring Section End*/}
-
 
         {/* Glow Overlay */}
         <div className="absolute inset-0 z-10 pointer-events-none animate-glow-pulse bg-radial-gradient"
@@ -294,7 +421,7 @@ const Home = () => {
 
         <img
           src="./planet-yellow-sativa.png.webp"
-          className="planet-surface fixed top-[5%] max-w-[600px] md:translate-x-162 translate-x-25 md:scale-100 scale-75  z-25 animate-slow-spin animate-planet-glow"
+          className="planet-surface fixed top-[5%] max-w-[600px] md:translate-x-162 translate-x-25 md:scale-100 scale-75 z-25 animate-slow-spin animate-planet-glow"
           style={{
             filter:
               "drop-shadow(0 0 40px rgba(255, 165, 0, 0.6)) drop-shadow(0 0 80px rgba(255, 100, 0, 0.3))",
@@ -312,15 +439,16 @@ const Home = () => {
         />
 
         <div className="marquee fixed top-[39%] left-0 w-full z-40 whitespace-nowrap overflow-hidden opacity-100 pointer-events-none md:top-[25%]">
-          <div className="uppercase marquee-inner inline-block font-rustea text-[22vh] font-semibold bg-linear-to-b from-white to-[#ffcccc] bg-clip-text text-transparent animate-marquee text-shadow-lg text-shadow-white tracking-tighter md:text-[15vw]">
+          <div className={`uppercase marquee-inner inline-block font-rustea font-semibold bg-linear-to-b from-white to-[#ffcccc] bg-clip-text text-transparent animate-marquee text-shadow-lg text-shadow-white tracking-tighter ${isMobile ? "text-[10vh]" : "text-[22vh] md:text-[15vw]"
+            }`}>
             <span>
-              Medha <span className="text-[12vh]">.25</span> &nbsp;
+              Medha <span className={isMobile ? "text-[6vh]" : "text-[12vh]"}>.25</span> &nbsp;
             </span>
             <span>
-              Medha <span className="text-[12vh]">.25</span> &nbsp;
+              Medha <span className={isMobile ? "text-[6vh]" : "text-[12vh]"}>.25</span> &nbsp;
             </span>
             <span>
-              Medha <span className="text-[12vh]">.25</span> &nbsp;
+              Medha <span className={isMobile ? "text-[6vh]" : "text-[12vh]"}>.25</span> &nbsp;
             </span>
           </div>
         </div>
@@ -328,7 +456,7 @@ const Home = () => {
         <img
           ref={astronautRef}
           src="./home-astronaut.webp"
-          className="astronaut md:scale-150 scale-170 fixed md:top-[60%] top-[90%] h-[65%] w-auto md:translate-x-125 translate-x-17 md:-translate-y-40 -translate-y-65 z-40 min-h-[300px] animate-float-astronaut  md:h-[90%] md:min-h-[400px]"
+          className="astronaut md:scale-150 scale-170 fixed md:top-[60%] top-[90%] h-[65%] w-auto md:translate-x-125 translate-x-17 md:-translate-y-40 -translate-y-65 z-40 min-h-[300px] animate-float-astronaut md:h-[90%] md:min-h-[400px]"
           style={{
             filter:
               "drop-shadow(0 15px 40px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 30px rgba(255, 100, 150, 0.2))",
