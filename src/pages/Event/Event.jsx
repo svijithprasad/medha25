@@ -51,6 +51,7 @@ export const Event = () => {
   const astronautRef = useRef(null);
   const bottomPlanetRef = useRef(null);
   const topPlanetRef = useRef(null);
+  const eventTypeRef = useRef(null);
 
   useGSAP(() => {
     const el1 = eventNameRef.current;
@@ -69,6 +70,8 @@ export const Event = () => {
           scrub: 1,
         }
       });
+
+
 
     const el3 = astronautRef.current;
 
@@ -113,12 +116,26 @@ export const Event = () => {
       }
     })
 
+    const el6 = eventTypeRef.current;
+
+    const scene5 = gsap.to([el6], {
+      translateY: 0,
+      scrollTrigger: {
+        trigger: container,
+        // markers: true,
+        start: "8%",
+        end: "13%",
+        scrub: 1,
+      }
+    })
+
     // Cleanup the scroll trigger animation on component unmount
     return () => {
       scene1.kill();
       scene2.kill();
       scene3.kill();
       scene4.kill();
+      scene5.kill();
     }
   });
   // GSAP END
@@ -148,6 +165,15 @@ export const Event = () => {
         style={{ zIndex: images[0].zIndex }}
       />
 
+      {/* Event type */}
+      <div className="absolute z-10 w-full h-full flex justify-center translate-y-[18%]">
+        <div className="h-12 overflow-hidden">
+          <h1 ref={eventTypeRef} className="md:text-4xl text-4xl uppercase text-white translate-y-12">
+            IT Manager
+          </h1>
+        </div>
+      </div>
+
       {/*Bottom Image */}
       <img
         ref={bottomPlanetRef}
@@ -167,9 +193,9 @@ export const Event = () => {
       />
 
       {/* Center Floating Image*/}
-      <div ref={eventImageRef} className=" fixed inset-0 z-20 w-full h-full flex items-center justify-center ">
+      <div ref={eventImageRef} className="fixed inset-0 z-20 w-full h-full flex items-center justify-center ">
         <img
-          className="animated-event-img md:scale-25 scale-35 -rotate-z-8 ease-in-out transform md:-translate-y-10 -translate-y-35"
+          className="animated-event-img transition md:scale-25 scale-35 -rotate-z-8 ease-in-out transform md:-translate-y-10 -translate-y-35"
           src={events[section]?.img}
           alt={events[section]?.name}
         />
@@ -177,10 +203,12 @@ export const Event = () => {
 
       {/* Center Event Name */}
       <div className="fixed z-10 w-full h-full flex items-center justify-center">
-        <h1 ref={eventNameRef} className="md:text-[130px] text-4xl uppercase text-[#83EFFF]">
+        <h1 ref={eventNameRef} className="md:text-[130px] text-4xl transition ease-in-out uppercase text-[#83EFFF]">
           {events[section]?.name || ""}
         </h1>
       </div>
+
+
 
       {/* Rules and Coordinators Section */}
       <Rules eventName={events[section]?.name || ""} section={0} />
