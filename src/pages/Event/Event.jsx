@@ -140,6 +140,10 @@ export const Event = () => {
   });
   // GSAP END
 
+  const handleRegister = () => {
+    window.open("https://konfhub.com/medha-2k25", "_blank")
+  }
+
   return (
     <section
       ref={containerRef}
@@ -208,10 +212,18 @@ export const Event = () => {
         </h1>
       </div>
 
-
-
       {/* Rules and Coordinators Section */}
       <Rules eventName={events[section]?.name || ""} section={0} />
+
+      {/* Register Now Button */}
+      <div className="absolute top-[60%] left-1/2 transform -translate-x-1/2 z-50">
+        <button
+          onClick={handleRegister}
+          className="bg-linear-to-r cursor-pointer from-[#83EFFF] to-[#0EA5E9] hover:from-[#67D8FF] hover:to-[#0284C7] text-gray-900/90 font-bold py-3 md:px-8 px-5 rounded-lg md:text-lg uppercase tracking-wider shadow-lg transform hover:scale-105 transition-all duration-300 border-2 border-[#83EFFF]/90 font-mono"
+        >
+          Register Now
+        </button>
+      </div>
 
       <button
         onClick={() => { navigate("/events/") }}
