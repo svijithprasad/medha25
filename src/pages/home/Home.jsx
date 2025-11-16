@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ScrollDown from "./ScrollDown";
 
 // GSAP
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import SocialBar from "../../components/SocialBar";
 import { useMediaQuery } from "react-responsive";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const Home = () => {
+  const navigate = useNavigate();
   const starsContainerRef = useRef(null);
   const splashContainerRef = useRef(null);
   const overlayRef = useRef(null);
@@ -65,7 +66,7 @@ const Home = () => {
 
     // Zoom in
     scene3.to(el3, {
-      scale: isMobile ? 3 : 1,
+      scale: isMobile ? 3 : 1.3,
       opacity: 1,
       duration: 500,
     });
@@ -103,6 +104,19 @@ const Home = () => {
       duration: 500
     });
 
+    // Add scroll trigger for navigation at the end
+    ScrollTrigger.create({
+      trigger: document.body,
+      start: "bottom bottom",
+      end: "bottom bottom",
+      onEnter: () => {
+        navigate("/events");
+      },
+      onEnterBack: () => {
+        navigate("/events");
+      }
+    });
+
     return () => {
       scene1.kill();
       scene2.kill();
@@ -110,7 +124,7 @@ const Home = () => {
       scene4.kill();
     }
 
-  }, [isMobile]); // Add isMobile as dependency
+  }, [isMobile, navigate]); // Add navigate as dependency
 
   const createStars = () => {
     const starsContainer = starsContainerRef.current;
@@ -329,8 +343,6 @@ const Home = () => {
           }}
           alt="Interior of a spaceship cockpit"
         />
-
-
 
         {/* Orbit Rings */}
         <div className="orbit-ring absolute w-[200px] h-[200px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white/10 rounded-full animate-rotate-orbit pointer-events-none hidden md:block md:w-[300px] md:h-[300px]"></div>

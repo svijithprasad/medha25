@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { House, LucideNewspaper, PartyPopper, Stars } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -9,12 +9,30 @@ export default function SocialBar() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  const beepAudio = new Audio(beep);
-  const zapAudio = new Audio(zap);
+  const beepAudioRef = useRef(null);
+  const zapAudioRef = useRef(null);
+
+  useEffect(() => {
+    beepAudioRef.current = new Audio(beep);
+    zapAudioRef.current = new Audio(zap);
+    
+    beepAudioRef.current.load();
+    zapAudioRef.current.load();
+    
+    return () => {
+      if (beepAudioRef.current) {
+        beepAudioRef.current.pause();
+        beepAudioRef.current = null;
+      }
+      if (zapAudioRef.current) {
+        zapAudioRef.current.pause();
+        zapAudioRef.current = null;
+      }
+    };
+  }, []);
 
   return (
     <>
-      {/* === OVERLAY (click to close) === */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -23,14 +41,29 @@ export default function SocialBar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            onClick={() => { beepAudio.play(), setOpen(false) }}
+            onClick={() => { 
+              if (beepAudioRef.current) {
+                beepAudioRef.current.currentTime = 0;
+                beepAudioRef.current.play().catch(error => {
+                  console.log("Beep audio play failed:", error);
+                });
+              }
+              setOpen(false);
+            }}
           />
         )}
       </AnimatePresence>
 
-      {/* === RIGHT MENU BUTTON === */}
       <button
-        onClick={() => { beepAudio.play(), setOpen(!open) }}
+        onClick={() => { 
+          if (beepAudioRef.current) {
+            beepAudioRef.current.currentTime = 0;
+            beepAudioRef.current.play().catch(error => {
+              console.log("Beep audio play failed:", error);
+            });
+          }
+          setOpen(!open);
+        }}
         className="fixed right-0 top-1/2 -translate-y-1/2 bg-white shadow-xl 
              rounded-l-full w-12 h-24 flex items-center justify-center 
              border border-gray-300 z-99999 cursor-pointer hover:bg-gray-100"
@@ -38,9 +71,16 @@ export default function SocialBar() {
         <span className="rotate-90 tracking-wider font-semibold">MENU</span>
       </button>
 
-      {/* === LEFT MENU BUTTON === */}
       <button
-        onClick={() => { beepAudio.play(), setOpen(!open) }}
+        onClick={() => { 
+          if (beepAudioRef.current) {
+            beepAudioRef.current.currentTime = 0;
+            beepAudioRef.current.play().catch(error => {
+              console.log("Beep audio play failed:", error);
+            });
+          }
+          setOpen(!open);
+        }}
         className="fixed left-0 top-1/2 -translate-y-1/2 bg-white shadow-xl 
              rounded-r-full w-12 h-24 flex items-center justify-center 
              border border-gray-300 z-99999 cursor-pointer hover:bg-gray-100"
@@ -48,7 +88,6 @@ export default function SocialBar() {
         <span className="-rotate-90 tracking-wider font-semibold">MENU</span>
       </button>
 
-      {/* === SOCIAL MENU (CENTERED) === */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -64,12 +103,19 @@ export default function SocialBar() {
             className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
                 z-99999"
           >
-            {/* === 4 Quadrants === */}
             <div className="flex flex-col gap-3">
               <div className="flex gap-3">
-                {/* Home */}
                 <button
-                  onClick={() => { zapAudio.play(), setOpen(false), navigate("/") }}
+                  onClick={() => { 
+                    if (zapAudioRef.current) {
+                      zapAudioRef.current.currentTime = 0;
+                      zapAudioRef.current.play().catch(error => {
+                        console.log("Zap audio play failed:", error);
+                      });
+                    }
+                    setOpen(false);
+                    navigate("/");
+                  }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[90px_5px_5px_5px] border-[3px] border-[#2d2d2d]
                   shadow-[6px_6px_0px_#2d2d2d] pt-3 pl-3 flex items-center justify-center
@@ -79,9 +125,17 @@ export default function SocialBar() {
                   <House size={30} className="group-hover:text-white" />
                 </button>
 
-                {/* Events */}
                 <button
-                  onClick={() => { zapAudio.play(), setOpen(false), navigate("/events") }}
+                  onClick={() => { 
+                    if (zapAudioRef.current) {
+                      zapAudioRef.current.currentTime = 0;
+                      zapAudioRef.current.play().catch(error => {
+                        console.log("Zap audio play failed:", error);
+                      });
+                    }
+                    setOpen(false);
+                    navigate("/events");
+                  }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[5px_90px_5px_5px] border-[3px] border-[#2d2d2d]
                   shadow-[6px_6px_0px_#2d2d2d] pt-3 pr-3 flex items-center justify-center
@@ -93,9 +147,17 @@ export default function SocialBar() {
               </div>
 
               <div className="flex gap-3">
-                {/* Glimpse */}
                 <button
-                  onClick={() => { zapAudio.play(), setOpen(false), navigate("/glimpse") }}
+                  onClick={() => { 
+                    if (zapAudioRef.current) {
+                      zapAudioRef.current.currentTime = 0;
+                      zapAudioRef.current.play().catch(error => {
+                        console.log("Zap audio play failed:", error);
+                      });
+                    }
+                    setOpen(false);
+                    navigate("/glimpse");
+                  }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[5px_5px_5px_90px] border-[3px] border-[#2d2d2d]
                   shadow-[6px_6px_0px_#2d2d2d] pb-2.5 pl-3 flex items-center justify-center
@@ -105,9 +167,17 @@ export default function SocialBar() {
                   <Stars size={30} className="group-hover:text-white" />
                 </button>
 
-                {/* Brochure */}
                 <button
-                  onClick={() => { zapAudio.play(), setOpen(false), navigate("/brochure") }}
+                  onClick={() => { 
+                    if (zapAudioRef.current) {
+                      zapAudioRef.current.currentTime = 0;
+                      zapAudioRef.current.play().catch(error => {
+                        console.log("Zap audio play failed:", error);
+                      });
+                    }
+                    setOpen(false);
+                    navigate("/brochure");
+                  }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[5px_5px_90px_5px] border-[3px] border-[#2d2d2d]
                   shadow-[6px_6px_0px_#2d2d2d] pb-3 pr-3 flex items-center justify-center

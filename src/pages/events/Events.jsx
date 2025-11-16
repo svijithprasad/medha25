@@ -2,14 +2,14 @@ import { useRef, useState, useEffect } from "react";
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from "react-router-dom";
 
 import { Contact } from "./Contact";
 import { About } from "../about/About";
 
-import desappearance from "../../assets/desappearance.mp3"
-import scifi from "../../assets/scifi.mp3"
+import desappearance from "../../assets/desappearance.mp3";
+import open from "../../assets/open.mp3";
 
 gsap.registerPlugin(useGSAP);
 
@@ -22,8 +22,10 @@ const borderStyles = 'shadow-[0_0_10px_2px_rgba(23,170,255,0.7),_0_0_1px_1px_rgb
 
 export const Events = () => {
   const navigate = useNavigate();
-  const audio = new Audio(desappearance);
-  const scifiAudio = new Audio(scifi);
+  
+  // Use useRef for audio objects to persist across re-renders
+  const audioRef = useRef(null);
+  const openAudioRef = useRef(null);
 
   const backgroundLayers = [
     { src: "/2.png.webp", alt: "Stars", zIndex: 1 },
@@ -36,7 +38,7 @@ export const Events = () => {
     { src: "planet-green.webp", alt: "Planet Green", zIndex: 1 },
     { src: "planet-yellow.webp", alt: "Planet Yellow", zIndex: 1 },
     { src: "indica-product.webp", alt: "Event 1", zIndex: 1 },
-  ]
+  ];
 
   const events = [
     { name: "Astrinix", img: "/events/img/e1.png" },
@@ -47,7 +49,7 @@ export const Events = () => {
     { name: "Tech Nova", img: "/events/img/e6.png" },
     { name: "Chrono Cipher", img: "/events/img/e7.png" },
     { name: "Time Nova", img: "/events/img/e8.png" }
-  ]
+  ];
 
   const eventRef = useRef(null);
   const textRef = useRef(null);
@@ -58,6 +60,28 @@ export const Events = () => {
   const [modal, setModal] = useState(false);
 
   const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  // Initialize audio objects once
+  useEffect(() => {
+    audioRef.current = new Audio(desappearance);
+    openAudioRef.current = new Audio(open);
+    
+    // Optional: Preload the audio
+    audioRef.current.load();
+    openAudioRef.current.load();
+    
+    return () => {
+      // Cleanup on unmount
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      if (openAudioRef.current) {
+        openAudioRef.current.pause();
+        openAudioRef.current = null;
+      }
+    };
+  }, []);
 
   const getVisibleEvents = () => {
     if (isMobile) {
@@ -108,12 +132,22 @@ export const Events = () => {
   };
 
   const handleScrollRight = () => {
-    audio.play();
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0; // Reset to start
+      audioRef.current.play().catch(error => {
+        console.log("Audio play failed:", error);
+      });
+    }
     runScrollAnimation(() => setCurrentIndex((prev) => (prev + 1) % events.length), 50);
   };
 
   const handleScrollLeft = () => {
-    audio.play();
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0; // Reset to start
+      audioRef.current.play().catch(error => {
+        console.log("Audio play failed:", error);
+      });
+    }
     runScrollAnimation(() => setCurrentIndex((prev) => (prev - 1 + events.length) % events.length), -50);
   };
 
@@ -223,15 +257,26 @@ export const Events = () => {
       </div>
 
       <div className="relative z-10 w-full h-full flex items-center justify-center">
-        <img className="md:scale-100 z-99 scale-200 absolute -bottom-50 md:-bottom-220 transition ease-in-out" src="/planet-blue.webp" alt="" style={{
-          animation: 'spin-reverse 180s linear infinite'
-        }} />
+        <img 
+          className="md:scale-100 z-99 scale-200 absolute -bottom-50 md:-bottom-220 transition ease-in-out" 
+          src="/planet-blue.webp" 
+          alt="" 
+          style={{
+            animation: 'spin-reverse 180s linear infinite'
+          }} 
+        />
       </div>
 
       <div
         onClick={() => { navigate(`/event/${currentIndex}`) }}
-        ref={eventRef} className="relative z-30 w-full h-full flex items-center justify-center">
-        <img className="absolute md:bottom-205 bottom-220 md:scale-100 scale-90 h-[60%]" src={events[currentIndex].img} alt="" />
+        ref={eventRef} 
+        className="relative z-30 w-full h-full flex items-center justify-center"
+      >
+        <img 
+          className="absolute md:bottom-205 bottom-220 md:scale-100 scale-90 h-[60%]" 
+          src={events[currentIndex].img} 
+          alt="" 
+        />
       </div>
 
       <div className="md:bottom-5 bottom-18 fixed left-[50%] transform w-auto max-w-[560px] nav-holder">
@@ -271,7 +316,15 @@ export const Events = () => {
 
       <button
         className="absolute bg-gray-200 px-2 py-1 rounded-xl uppercase cursor-pointer text-xl bottom-3 right-6 z-9999 tracking-wider border-2 border-gray-800 text-shadow-gray-600 font-bold hover:scale-110"
-        onClick={() => { scifiAudio.play(), setModal(!modal) }}
+        onClick={() => { 
+          if (openAudioRef.current) {
+            openAudioRef.current.currentTime = 0;
+            openAudioRef.current.play().catch(error => {
+              console.log("Open audio play failed:", error);
+            });
+          }
+          setModal(!modal);
+        }}
       >
         {modal ? "Close" : "About"}
       </button>

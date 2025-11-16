@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const ScrollDown = () => {
   return (
-    <StyledWrapper className='fixed scale-105 bottom-5 right-5 md:right-10 z-99 md:animate-bounce'>
+    <StyledWrapper className='fixed scale-90 bottom-5 right-5 md:right-10 z-99 md:animate-bounce'>
       <div className="container_mouse">
         <span className="mouse-btn">
           <span className="mouse-scroll" />
