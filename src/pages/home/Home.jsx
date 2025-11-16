@@ -32,8 +32,8 @@ const Home = () => {
     const el1 = astronautRef.current;
 
     const scene1 = gsap.to(el1, {
-      top: !isMobile ? "2600px" : "2300px",
-      scale: isMobile ? 15 : 10,
+      top: !isMobile ? "3200px" : "2400px",
+      scale: 10,
       duration: 500,
       scrollTrigger: {
         trigger: document.body,
@@ -178,18 +178,18 @@ const Home = () => {
       duration: 500
     });
 
-    // Add scroll trigger for navigation at the end
-    ScrollTrigger.create({
-      trigger: document.body,
-      start: isMobile ? "68%" : "68%",
-      end: isMobile ? "75%" : "75%",
-      onEnter: () => {
-        navigate("/events");
-      },
-      onEnterBack: () => {
-        navigate("/events");
-      }
-    });
+    // // Add scroll trigger for navigation at the end
+    // ScrollTrigger.create({
+    //   trigger: document.body,
+    //   start: isMobile ? "68%" : "68%",
+    //   end: isMobile ? "75%" : "75%",
+    //   onEnter: () => {
+    //     navigate("/events");
+    //   },
+    //   onEnterBack: () => {
+    //     navigate("/events");
+    //   }
+    // });
 
     return () => {
       scene1.kill();
@@ -201,7 +201,7 @@ const Home = () => {
       scene7.kill();
     }
 
-  }, [isMobile, navigate]);
+  }, [isMobile]);
 
   const createStars = () => {
     const starsContainer = starsContainerRef.current;
@@ -395,10 +395,14 @@ const Home = () => {
             </p>
             <div className={`flex gap-8 justify-center ${isMobile ? "flex-col gap-4 items-center" : "flex-row"
               }`}>
-              <button className="px-8 py-4 bg-linear-to-r from-[#83EFFF] to-[#0EA5E9] hover:from-[#67D8FF] hover:to-[#0284C7] text-gray-900/90 font-bold rounded-lg border-2 border-[#83EFFF] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
+              <button
+                onClick={() => {navigate("/events")}}
+               className="px-8 py-4 bg-linear-to-r from-[#83EFFF] to-[#0EA5E9] hover:from-[#67D8FF] hover:to-[#0284C7] text-gray-900/90 font-bold rounded-lg border-2 border-[#83EFFF] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
                 Technical Events
               </button>
-              <button className="px-8 py-4 bg-linear-to-r from-[#FFDE1C] via-[#FDC700] to-[#F1B200] hover:from-[#FFE55C] hover:via-[#FFD700] hover:to-[#F1B200] text-gray-900/90 font-bold rounded-lg border-2 border-[#FFDE1C] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
+              <button
+                onClick={() => {window.open("https://shreedevisambhram.in", "_blank")}}
+              className="px-8 py-4 bg-linear-to-r from-[#FFDE1C] via-[#FDC700] to-[#F1B200] hover:from-[#FFE55C] hover:via-[#FFD700] hover:to-[#F1B200] text-gray-900/90 font-bold rounded-lg border-2 border-[#FFDE1C] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
                 Cultural Events
               </button>
             </div>
@@ -456,7 +460,7 @@ const Home = () => {
         <img
           ref={astronautRef}
           src="./home-astronaut.webp"
-          className="astronaut md:scale-150 scale-170 fixed md:top-[60%] top-[90%] h-[65%] w-auto md:translate-x-125 translate-x-17 md:-translate-y-40 -translate-y-65 z-40 min-h-[300px] animate-float-astronaut md:h-[90%] md:min-h-[400px]"
+          className="astronaut md:scale-150 scale-170 fixed md:top-[60%] top-[90%] h-[65%] w-auto md:translate-x-125 translate-x-20 md:-translate-y-40 -translate-y-65 z-40 min-h-[300px] animate-float-astronaut md:h-[90%] md:min-h-[400px]"
           style={{
             filter:
               "drop-shadow(0 15px 40px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 30px rgba(255, 100, 150, 0.2))",
