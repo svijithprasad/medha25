@@ -7,7 +7,6 @@ import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { Rules } from "./subSection/Rules";
-import { Contact } from "./Contact";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -232,11 +231,6 @@ export const Event = () => {
       >
         Back
       </button>
-
-      <div>
-        <Contact />
-      </div>
-
     </section>
   );
 }

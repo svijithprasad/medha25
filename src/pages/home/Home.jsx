@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollDown from "./ScrollDown";
-import { Contact } from "./Contact";
 
 // GSAP
 import gsap from "gsap";
@@ -340,7 +339,7 @@ const Home = () => {
     <div id="main-content" className="w-full h-full">
       <div
         ref={splashContainerRef}
-        className="relative w-screen h-[1200vh] overflow-scroll bg-[#152448] bg-cover bg-center bg-no-repeat bg-blend-overlay"
+        className="relative w-screen h-[1000vh] overflow-scroll bg-[#152448] bg-cover bg-center bg-no-repeat bg-blend-overlay"
         style={{
           backgroundImage: `linear-gradient(circle at 50% 30%,rgb(238, 37, 15) 0%,rgb(241, 29, 54) 80%,rgb(248, 0, 50) 100%), url('./home-cloud.webp')`,
         }}
@@ -497,7 +496,6 @@ const Home = () => {
           style={{ animationDuration: '35s', animationDirection: 'reverse' }}></div>
 
         <ScrollDown />
-        <Contact />
       </div>
     </div>
   );

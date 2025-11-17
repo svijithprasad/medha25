@@ -5,7 +5,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from "react-router-dom";
 
-import { Contact } from "./Contact";
 import { About } from "../about/About";
 
 import desappearance from "../../assets/desappearance.mp3";
@@ -311,8 +310,6 @@ export const Events = () => {
           </div>
         </div>
       </div>
-
-      <Contact />
 
       <button
         className="absolute bg-gray-200 px-2 py-1 rounded-xl uppercase cursor-pointer text-xl bottom-3 right-6 z-9999 tracking-wider border-2 border-gray-800 text-shadow-gray-600 font-bold hover:scale-110"
