@@ -102,8 +102,8 @@ const Home = () => {
     const scene3 = gsap.timeline({
       scrollTrigger: {
         trigger: document.body,
-        start: isMobile ? "26%" : "26%",
-        end: isMobile ? "32%" : "32%",
+        start: "26%",
+        end: "41%",
         scrub: 2,
         markers: devMode,
       }
@@ -126,8 +126,8 @@ const Home = () => {
     const scene4 = gsap.timeline({
       scrollTrigger: {
         trigger: document.body,
-        start: isMobile ? "33%" : "33%",
-        end: isMobile ? "39%" : "39%",
+        start: "42%",
+        end: "57%",
         scrub: 2,
         markers: devMode,
       }
@@ -136,13 +136,13 @@ const Home = () => {
     scene4.to(el4, {
       scale: isMobile ? 2.5 : 1,
       opacity: 1,
-      duration: 500,
+      // duration: 500,
     });
 
     scene4.to(el4, {
       scale: .5,
       opacity: 0,
-      duration: 500
+      // duration: 500
     });
 
     // Feature 3 - Responsive text animation
@@ -150,8 +150,8 @@ const Home = () => {
     const scene5 = gsap.timeline({
       scrollTrigger: {
         trigger: document.body,
-        start: isMobile ? "40%" : "40%",
-        end: isMobile ? "46%" : "46%",
+        start: "58%",
+        end: "68%",
         scrub: 2,
         markers: devMode,
       }
@@ -160,13 +160,13 @@ const Home = () => {
     scene5.to(el5, {
       scale: isMobile ? 1.8 : 1,
       opacity: 1,
-      duration: 500,
+      // duration: 500,
     });
 
     scene5.to(el5, {
       scale: .5,
       opacity: 0,
-      duration: 500
+      // duration: 500
     });
 
     // Feature 4 - Responsive text animation
@@ -174,8 +174,8 @@ const Home = () => {
     const scene6 = gsap.timeline({
       scrollTrigger: {
         trigger: document.body,
-        start: isMobile ? "47%" : "47%",
-        end: isMobile ? "53%" : "53%",
+        start: "69%",
+        end: "79%",
         scrub: 2,
         markers: devMode,
       }
@@ -198,8 +198,8 @@ const Home = () => {
     const scene7 = gsap.timeline({
       scrollTrigger: {
         trigger: document.body,
-        start: isMobile ? "54%" : "54%",
-        end: isMobile ? "67%" : "67%",
+        start: "80%",
+        end: "bottom",
         scrub: 2,
         markers: devMode,
       }
@@ -234,7 +234,7 @@ const Home = () => {
     const starsContainer = starsContainerRef.current;
     if (!starsContainer) return;
 
-    const starCount = isMobile ? 200 : 300;
+    const starCount = isMobile ? 40 : 80;
     const fragment = document.createDocumentFragment();
 
     for (let i = 0; i < starCount; i++) {
@@ -340,7 +340,7 @@ const Home = () => {
     <div id="main-content" className="w-full h-full">
       <div
         ref={splashContainerRef}
-        className="relative w-screen h-[250vh] overflow-scroll bg-[#152448] bg-cover bg-center bg-no-repeat bg-blend-overlay"
+        className="relative w-screen h-[1200vh] overflow-scroll bg-[#152448] bg-cover bg-center bg-no-repeat bg-blend-overlay"
         style={{
           backgroundImage: `linear-gradient(circle at 50% 30%,rgb(238, 37, 15) 0%,rgb(241, 29, 54) 80%,rgb(248, 0, 50) 100%), url('./home-cloud.webp')`,
         }}
@@ -370,7 +370,7 @@ const Home = () => {
         {/* New Feature Sections */}
         <div ref={feat3Ref} className="fixed opacity-0 inset-0 scale-75 flex z-96 items-center justify-center">
           <div className="text-center text-white px-4">
-            <h1 className={`font-bold mb-4 bg-gradient-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
+            <h1 className={`font-bold mb-4 bg-linear-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
               }`}>
               Department of MCA Presents
             </h1>
@@ -383,7 +383,7 @@ const Home = () => {
 
         <div ref={feat4Ref} className="fixed opacity-0 inset-0 scale-75 flex z-96 items-center justify-center">
           <div className="text-center text-white px-4">
-            <h1 className={`font-bold mb-4 bg-gradient-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
+            <h1 className={`font-bold mb-4 bg-linear-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
               }`}>
               When?
             </h1>
@@ -396,7 +396,7 @@ const Home = () => {
 
         <div ref={feat5Ref} className="fixed opacity-0 inset-0 scale-75 flex z-96 items-center justify-center">
           <div className="text-center text-white px-4">
-            <h1 className={`font-bold mb-4 bg-gradient-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
+            <h1 className={`font-bold mb-4 bg-linear-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
               }`}>
               Where?
             </h1>
@@ -408,12 +408,12 @@ const Home = () => {
               }`}>
               <button
                 onClick={() => { navigate("/events") }}
-                className="px-8 py-4 bg-gradient-to-r from-[#83EFFF] to-[#0EA5E9] hover:from-[#67D8FF] hover:to-[#0284C7] text-gray-900/90 font-bold rounded-lg border-2 border-[#83EFFF] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
+                className="px-8 py-4 bg-linear-to-r from-[#83EFFF] to-[#0EA5E9] hover:from-[#67D8FF] hover:to-[#0284C7] text-gray-900/90 font-bold rounded-lg border-2 border-[#83EFFF] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
                 Technical Events
               </button>
               <button
                 onClick={() => { window.open("https://shreedevisambhram.in", "_blank") }}
-                className="px-8 py-4 bg-gradient-to-r from-[#FFDE1C] via-[#FDC700] to-[#F1B200] hover:from-[#FFE55C] hover:via-[#FFD700] hover:to-[#F1B200] text-gray-900/90 font-bold rounded-lg border-2 border-[#FFDE1C] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
+                className="px-8 py-4 bg-linear-to-r from-[#FFDE1C] via-[#FDC700] to-[#F1B200] hover:from-[#FFE55C] hover:via-[#FFD700] hover:to-[#F1B200] text-gray-900/90 font-bold rounded-lg border-2 border-[#FFDE1C] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
                 Cultural Events
               </button>
             </div>
@@ -457,7 +457,7 @@ const Home = () => {
         />
 
         <div className="marquee fixed top-[39%] left-0 w-full z-40 whitespace-nowrap overflow-hidden opacity-100 pointer-events-none md:top-[25%]">
-          <div className={`uppercase marquee-inner inline-block font-rustea font-semibold bg-gradient-to-b from-white to-[#ffcccc] bg-clip-text text-transparent animate-marquee text-shadow-lg text-shadow-white tracking-tighter ${isMobile ? "text-[10vh]" : "text-[22vh] md:text-[15vw]"
+          <div className={`uppercase marquee-inner inline-block font-rustea font-semibold bg-linear-to-b from-white to-[#ffcccc] bg-clip-text text-transparent animate-marquee text-shadow-lg text-shadow-white tracking-tighter ${isMobile ? "text-[10vh]" : "text-[22vh] md:text-[15vw]"
             }`}>
             <span>
               Medha <span className={isMobile ? "text-[6vh]" : "text-[12vh]"}>.25</span> &nbsp;
