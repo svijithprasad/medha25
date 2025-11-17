@@ -141,7 +141,8 @@ export const Event = () => {
   // GSAP END
 
   const handleRegister = () => {
-    window.open("https://konfhub.com/medha-2k25", "_blank")
+    // window.open("https://konfhub.com/medha-2k25", "_blank")
+    alert("Registration opens on November 20!")
   }
 
   return (

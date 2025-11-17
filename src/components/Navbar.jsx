@@ -19,7 +19,8 @@ export const Navbar = () => {
       <div className="">
         <button
           className="cursor-pointer text-xl text-gray-800 bg-linear-to-br from-[#b3bde7] via-50% to-[#E8EDFF] tracking-wide font-semibold px-3 py-2 rounded-lg transition-all duration-300 transform shadow-lg hover:shadow-xl"
-          onClick={() => window.open('https://konfhub.com/medha-2k25', '_blank,')}
+          onClick={() => {alert("Registration opens on November 20!")}}
+          // window.open('https://konfhub.com/medha-2k25', '_blank,')
         >
           Register
         </button>
