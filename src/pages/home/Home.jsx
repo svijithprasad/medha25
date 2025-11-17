@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollDown from "./ScrollDown";
 import { Contact } from "./Contact";
@@ -10,6 +10,19 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useMediaQuery } from "react-responsive";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+// Debounce utility function
+const debounce = (func, wait) => {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
 
 const Home = () => {
   const navigate = useNavigate();
@@ -23,16 +36,42 @@ const Home = () => {
   const feat4Ref = useRef(null);
   const feat5Ref = useRef(null);
 
+  // New refs for planet elements
+  const planetRef = useRef(null);
+  const planetSurfaceRef = useRef(null);
+  const rocksRef = useRef(null);
+
   const [devMode, setDevMode] = useState(false);
 
   // Fixed media query - use the hook directly in component
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
+  // Stable mouse move handler with useCallback
+  const handleMouseMove = useCallback((e) => {
+    if (isMobile) return;
+
+    const mouseX = e.clientX / window.innerWidth;
+    const mouseY = e.clientY / window.innerHeight;
+
+    if (planetRef.current) {
+      planetRef.current.style.transform = `translateX(calc(-50% + ${mouseX * 20 - 10}px))`;
+    }
+
+    if (planetSurfaceRef.current) {
+      planetSurfaceRef.current.style.transform = `translateX(calc(-50% + ${mouseX * 30 - 15}px))`;
+    }
+
+    if (rocksRef.current) {
+      rocksRef.current.style.transform = `translate(${mouseX * 10 - 5}px, ${mouseY * 10 - 5}px)`;
+    }
+  }, [isMobile]);
+
+  // GSAP animations with proper dependencies
   useGSAP(() => {
     const el1 = astronautRef.current;
 
     const scene1 = gsap.to(el1, {
-      top: !isMobile ? "3200px" : "2400px",
+      top: !isMobile ? "2600px" : "2400px",
       scale: 10,
       duration: 500,
       scrollTrigger: {
@@ -178,19 +217,6 @@ const Home = () => {
       duration: 500
     });
 
-    // // Add scroll trigger for navigation at the end
-    // ScrollTrigger.create({
-    //   trigger: document.body,
-    //   start: isMobile ? "68%" : "68%",
-    //   end: isMobile ? "75%" : "75%",
-    //   onEnter: () => {
-    //     navigate("/events");
-    //   },
-    //   onEnterBack: () => {
-    //     navigate("/events");
-    //   }
-    // });
-
     return () => {
       scene1.kill();
       scene2.kill();
@@ -201,23 +227,24 @@ const Home = () => {
       scene7.kill();
     }
 
-  }, [isMobile]);
+  }, [isMobile, navigate, devMode]); // ✅ Added all dependencies
 
-  const createStars = () => {
+  // Optimized star creation with DocumentFragment
+  const createStars = useCallback(() => {
     const starsContainer = starsContainerRef.current;
     if (!starsContainer) return;
 
-    const starCount = isMobile ? 200 : 300; // Fewer stars on mobile for performance
+    const starCount = isMobile ? 200 : 300;
+    const fragment = document.createDocumentFragment();
 
     for (let i = 0; i < starCount; i++) {
       const star = document.createElement("div");
-      star.className =
-        "absolute bg-white rounded-full shadow-[0_0_3px_rgba(255,255,255,0.6)] animate-twinkle";
 
       if (i % 25 === 0) {
-        star.className +=
-          " shooting-star bg-gradient-to-r from-white to-transparent w-0.5 h-0.5 animate-shooting-star";
+        star.className = "absolute shooting-star bg-gradient-to-r from-white to-transparent w-0.5 h-0.5 animate-shooting-star";
       } else {
+        star.className = "absolute bg-white rounded-full shadow-[0_0_3px_rgba(255,255,255,0.6)] animate-twinkle";
+
         const sizeRandom = Math.random();
         let size;
         if (sizeRandom > 0.9) {
@@ -247,52 +274,49 @@ const Home = () => {
       }
       star.style.opacity = opacity;
 
-      starsContainer.appendChild(star);
+      fragment.appendChild(star);
     }
-  };
 
-  const createParticles = () => {
+    starsContainer.appendChild(fragment);
+  }, [isMobile]);
+
+  // Optimized particle creation with DocumentFragment
+  const createParticles = useCallback(() => {
     const container = splashContainerRef.current;
     if (!container) return;
 
-    const particleCount = isMobile ? 6 : 10; // Fewer particles on mobile
+    const particleCount = isMobile ? 6 : 10;
+    const fragment = document.createDocumentFragment();
 
     for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement("div");
-      particle.className =
-        "particle absolute w-[3px] h-[3px] bg-radial-gradient rounded-full pointer-events-none z-15 shadow-[0_0_6px_rgba(255,255,255,0.6)] animate-particle-float";
-      particle.style.background =
-        "radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(255, 200, 150, 0.5))";
+      particle.className = "particle absolute w-[3px] h-[3px] bg-radial-gradient rounded-full pointer-events-none z-15 shadow-[0_0_6px_rgba(255,255,255,0.6)] animate-particle-float";
+      particle.style.background = "radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(255, 200, 150, 0.5))";
       particle.style.left = `${Math.random() * 100}%`;
       particle.style.bottom = "-10px";
       particle.style.animationDelay = `${Math.random() * 5}s`;
       particle.style.animationDuration = `${Math.random() * 4 + 4}s`;
-      container.appendChild(particle);
-    }
-  };
 
-  const handleMouseMove = (e) => {
-    if (isMobile) return; // Disable mouse move effects on mobile
-
-    const mouseX = e.clientX / window.innerWidth;
-    const mouseY = e.clientY / window.innerHeight;
-
-    const planet = document.querySelector(".planet-bg");
-    const planetSurface = document.querySelector(".planet-surface");
-    const rocks = document.querySelector(".floating-rocks");
-
-    if (planet) {
-      planet.style.transform = `translateX(calc(-50% + ${mouseX * 20 - 10}px))`;
+      fragment.appendChild(particle);
     }
 
-    if (planetSurface) {
-      planetSurface.style.transform = `translateX(calc(-50% + ${mouseX * 30 - 15}px))`;
+    container.appendChild(fragment);
+  }, [isMobile]);
+
+  // Debounced resize handler
+  const handleResize = useCallback(debounce(() => {
+    const starsContainer = starsContainerRef.current;
+    const splashContainer = splashContainerRef.current;
+
+    if (starsContainer) starsContainer.innerHTML = "";
+    if (splashContainer) {
+      const particles = splashContainer.querySelectorAll(".particle");
+      particles.forEach((particle) => particle.remove());
     }
 
-    if (rocks) {
-      rocks.style.transform = `translate(${mouseX * 10 - 5}px, ${mouseY * 10 - 5}px)`;
-    }
-  };
+    createStars();
+    createParticles();
+  }, 250), [createStars, createParticles]);
 
   useEffect(() => {
     createStars();
@@ -303,27 +327,14 @@ const Home = () => {
       document.addEventListener('mousemove', handleMouseMove);
     }
 
-    const handleResize = () => {
-      const starsContainer = starsContainerRef.current;
-      const splashContainer = splashContainerRef.current;
-
-      if (starsContainer) starsContainer.innerHTML = "";
-      if (splashContainer) {
-        const particles = splashContainer.querySelectorAll(".particle");
-        particles.forEach((particle) => particle.remove());
-      }
-
-      createStars();
-      createParticles();
-    };
-
     window.addEventListener("resize", handleResize);
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener("resize", handleResize);
+      handleResize.cancel?.();
     };
-  }, [isMobile]);
+  }, [isMobile, handleMouseMove, handleResize, createStars, createParticles]);
 
   return (
     <div id="main-content" className="w-full h-full">
@@ -359,7 +370,7 @@ const Home = () => {
         {/* New Feature Sections */}
         <div ref={feat3Ref} className="fixed opacity-0 inset-0 scale-75 flex z-96 items-center justify-center">
           <div className="text-center text-white px-4">
-            <h1 className={`font-bold mb-4 bg-linear-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
+            <h1 className={`font-bold mb-4 bg-gradient-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
               }`}>
               Department of MCA Presents
             </h1>
@@ -372,7 +383,7 @@ const Home = () => {
 
         <div ref={feat4Ref} className="fixed opacity-0 inset-0 scale-75 flex z-96 items-center justify-center">
           <div className="text-center text-white px-4">
-            <h1 className={`font-bold mb-4 bg-linear-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
+            <h1 className={`font-bold mb-4 bg-gradient-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
               }`}>
               When?
             </h1>
@@ -385,7 +396,7 @@ const Home = () => {
 
         <div ref={feat5Ref} className="fixed opacity-0 inset-0 scale-75 flex z-96 items-center justify-center">
           <div className="text-center text-white px-4">
-            <h1 className={`font-bold mb-4 bg-linear-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
+            <h1 className={`font-bold mb-4 bg-gradient-to-r from-white to-[#ffcccc] bg-clip-text text-transparent ${isMobile ? "text-3xl" : "text-6xl"
               }`}>
               Where?
             </h1>
@@ -396,13 +407,13 @@ const Home = () => {
             <div className={`flex gap-8 justify-center ${isMobile ? "flex-col gap-4 items-center" : "flex-row"
               }`}>
               <button
-                onClick={() => {navigate("/events")}}
-               className="px-8 py-4 bg-linear-to-r from-[#83EFFF] to-[#0EA5E9] hover:from-[#67D8FF] hover:to-[#0284C7] text-gray-900/90 font-bold rounded-lg border-2 border-[#83EFFF] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
+                onClick={() => { navigate("/events") }}
+                className="px-8 py-4 bg-gradient-to-r from-[#83EFFF] to-[#0EA5E9] hover:from-[#67D8FF] hover:to-[#0284C7] text-gray-900/90 font-bold rounded-lg border-2 border-[#83EFFF] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
                 Technical Events
               </button>
               <button
-                onClick={() => {window.open("https://shreedevisambhram.in", "_blank")}}
-              className="px-8 py-4 bg-linear-to-r from-[#FFDE1C] via-[#FDC700] to-[#F1B200] hover:from-[#FFE55C] hover:via-[#FFD700] hover:to-[#F1B200] text-gray-900/90 font-bold rounded-lg border-2 border-[#FFDE1C] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
+                onClick={() => { window.open("https://shreedevisambhram.in", "_blank") }}
+                className="px-8 py-4 bg-gradient-to-r from-[#FFDE1C] via-[#FDC700] to-[#F1B200] hover:from-[#FFE55C] hover:via-[#FFD700] hover:to-[#F1B200] text-gray-900/90 font-bold rounded-lg border-2 border-[#FFDE1C] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
                 Cultural Events
               </button>
             </div>
@@ -418,12 +429,14 @@ const Home = () => {
         <div ref={starsContainerRef} className="fixed inset-0 z-0" />
 
         <img
+          ref={planetRef}
           src="/web_element.png"
           className="planet-bg fixed top-[5%] left-1/2 w-4/5 max-w-[800px] -translate-x-1/2 z-20 opacity-80 blur-xl animate-pulse-custom md:w-3/5"
           alt="Red planet background"
         />
 
         <img
+          ref={planetSurfaceRef}
           src="./planet-yellow-sativa.png.webp"
           className="planet-surface fixed top-[5%] max-w-[600px] md:translate-x-162 translate-x-25 md:scale-100 scale-75 z-25 animate-slow-spin animate-planet-glow"
           style={{
@@ -434,6 +447,7 @@ const Home = () => {
         />
 
         <img
+          ref={rocksRef}
           src="./home-rocks.png.webp"
           className="floating-rocks fixed inset-0 object-cover object-center z-30 opacity-90 animate-float-rocks"
           style={{
@@ -443,7 +457,7 @@ const Home = () => {
         />
 
         <div className="marquee fixed top-[39%] left-0 w-full z-40 whitespace-nowrap overflow-hidden opacity-100 pointer-events-none md:top-[25%]">
-          <div className={`uppercase marquee-inner inline-block font-rustea font-semibold bg-linear-to-b from-white to-[#ffcccc] bg-clip-text text-transparent animate-marquee text-shadow-lg text-shadow-white tracking-tighter ${isMobile ? "text-[10vh]" : "text-[22vh] md:text-[15vw]"
+          <div className={`uppercase marquee-inner inline-block font-rustea font-semibold bg-gradient-to-b from-white to-[#ffcccc] bg-clip-text text-transparent animate-marquee text-shadow-lg text-shadow-white tracking-tighter ${isMobile ? "text-[10vh]" : "text-[22vh] md:text-[15vw]"
             }`}>
             <span>
               Medha <span className={isMobile ? "text-[6vh]" : "text-[12vh]"}>.25</span> &nbsp;
