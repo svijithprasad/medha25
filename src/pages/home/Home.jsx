@@ -157,7 +157,7 @@ const Home = () => {
     });
 
     scene5.to(el5, {
-      scale: isMobile ? 1.8 : 1,
+      scale: isMobile ? 1.4 : 1,
       opacity: 1,
       // duration: 500,
     });
@@ -181,7 +181,7 @@ const Home = () => {
     });
 
     scene6.to(el6, {
-      scale: isMobile ? 1.8 : 1,
+      scale: isMobile ? 1.4 : 1,
       opacity: 1,
       // duration: 500,
     });
@@ -205,7 +205,7 @@ const Home = () => {
     });
 
     scene7.to(el7, {
-      scale: isMobile ? 1.6 : 1,
+      scale: isMobile ? 1.2 : 1,
       opacity: 1,
       // duration: 500,
     });
