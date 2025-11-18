@@ -10,12 +10,14 @@ import { Rules } from "./subSection/Rules";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+import { eventRules } from "@/data/eventRules";
+
 const events = [
   { name: "Astrinix", img: "/events/img/e1.png" },
   { name: "Tech Blitz", img: "/events/img/e2.png" },
   { name: "Reel Verse", img: "/events/img/e4.png" },
   { name: "Galactic Rise", img: "/events/img/e3.png" },
-  { name: "Stellar", img: "/events/img/e5.png" },
+  { name: "Stellar X", img: "/events/img/e5.png" },
   { name: "Tech Nova", img: "/events/img/e6.png" },
   { name: "Chrono Cipher", img: "/events/img/e7.png" },
   { name: "Time Nova", img: "/events/img/e8.png" }
@@ -29,7 +31,11 @@ export const Event = () => {
     if (!(section >= 0) || !(section <= 7)) {
       navigate("/event/1");
     }
-  }, []);
+  }, [section, navigate]);
+
+  // Get current event data from eventRules
+  const currentEvent = eventRules[section];
+  const currentEventImage = events[section];
 
   const backgroundLayers = [
     { src: "/event/bg/bg2.webp", alt: "Dark Cloud", zIndex: 1 },
@@ -148,7 +154,7 @@ export const Event = () => {
     <section
       ref={containerRef}
       id="event"
-      className="relative w-screen h-[500vh] bg-black/90 bg-linear-to-b from-[#162145] via-[#073448] to-[#122D53] overflow-hidden cursor-pointer"
+      className="relative w-screen h-[300vh] bg-black/90 bg-linear-to-b from-[#162145] via-[#073448] to-[#122D53] overflow-hidden cursor-pointer"
     >
       {backgroundLayers.map((layer) => (
         <img
@@ -170,10 +176,10 @@ export const Event = () => {
       />
 
       {/* Event type */}
-      <div className="absolute z-10 w-full h-full flex justify-center translate-y-[18%]">
+      <div className="absolute z-10 w-full h-full flex justify-center md:translate-y-[21%] translate-y-[25%]">
         <div className="h-12 overflow-hidden">
           <h1 ref={eventTypeRef} className="md:text-4xl text-4xl uppercase text-white translate-y-12">
-            IT Manager
+            {currentEvent?.eventType || "Event Type"}
           </h1>
         </div>
       </div>
@@ -200,23 +206,31 @@ export const Event = () => {
       <div ref={eventImageRef} className="fixed inset-0 z-20 w-full h-full flex items-center justify-center ">
         <img
           className="animated-event-img transition md:scale-25 scale-35 -rotate-z-8 ease-in-out transform md:-translate-y-10 -translate-y-35"
-          src={events[section]?.img}
-          alt={events[section]?.name}
+          src={currentEventImage?.img}
+          alt={currentEventImage?.name}
         />
       </div>
 
       {/* Center Event Name */}
       <div className="fixed z-10 w-full h-full flex items-center justify-center">
         <h1 ref={eventNameRef} className="md:text-[130px] text-4xl transition ease-in-out uppercase text-[#83EFFF]">
-          {events[section]?.name || ""}
+          {currentEvent?.eventName || currentEventImage?.name || ""}
         </h1>
       </div>
 
       {/* Rules and Coordinators Section */}
-      <Rules eventName={events[section]?.name || ""} section={0} />
+      {currentEvent && (
+        <Rules 
+          eventName={currentEvent.eventName} 
+          eventType={currentEvent.eventType}
+          rules={currentEvent.rules}
+          coordinators={currentEvent.coordinators}
+          section={section}
+        />
+      )}
 
       {/* Register Now Button */}
-      <div className="absolute top-[60%] left-1/2 transform -translate-x-1/2 z-50">
+      <div className="absolute top-[85%] left-1/2 transform -translate-x-1/2 z-50">
         <button
           onClick={handleRegister}
           className="bg-linear-to-r cursor-pointer from-[#83EFFF] to-[#0EA5E9] hover:from-[#67D8FF] hover:to-[#0284C7] text-gray-900/90 font-bold py-3 md:px-8 px-5 rounded-lg md:text-lg uppercase tracking-wider shadow-lg transform hover:scale-105 transition-all duration-300 border-2 border-[#83EFFF]/90 font-mono"
