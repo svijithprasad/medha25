@@ -101,7 +101,7 @@ const Home = () => {
     const scene3 = gsap.timeline({
       scrollTrigger: {
         trigger: document.body,
-        start: "26%",
+        start: "20%",
         end: "41%",
         scrub: 2,
         markers: devMode,
@@ -111,13 +111,13 @@ const Home = () => {
     scene3.to(el3, {
       scale: isMobile ? 2.5 : 1.3,
       opacity: 1,
-      duration: 500,
+      // duration: 500,
     });
 
     scene3.to(el3, {
       scale: .5,
       opacity: 0,
-      duration: 500
+      // duration: 500
     });
 
     // Feature 2 - Responsive animation
@@ -183,13 +183,13 @@ const Home = () => {
     scene6.to(el6, {
       scale: isMobile ? 1.8 : 1,
       opacity: 1,
-      duration: 500,
+      // duration: 500,
     });
 
     scene6.to(el6, {
       scale: .5,
       opacity: 0,
-      duration: 500
+      // duration: 500
     });
 
     // Feature 5 - Responsive animation with button scaling
@@ -207,13 +207,13 @@ const Home = () => {
     scene7.to(el7, {
       scale: isMobile ? 1.6 : 1,
       opacity: 1,
-      duration: 500,
+      // duration: 500,
     });
 
     scene7.to(el7, {
       scale: .5,
       opacity: 0,
-      duration: 500
+      // duration: 500
     });
 
     return () => {
@@ -352,15 +352,15 @@ const Home = () => {
 
         <div ref={feat1Ref} className="fixed opacity-0 inset-0 scale-60 flex z-96 items-center justify-center">
           <img
-            src="feat1.jpg"
+            src="feat2.png"
             alt=""
             className={isMobile ? "max-w-[90%] max-h-[60%] object-contain" : ""}
           />
         </div>
 
-        <div ref={feat2Ref} className="fixed opacity-0 inset-0 scale-75 flex z-96 items-center justify-center">
+        <div ref={feat2Ref} className="fixed opacity-0 inset-0 scale-60 flex z-96 items-center justify-center">
           <img
-            src="feat3.jpg"
+            src="feat1.png"
             alt=""
             className={isMobile ? "max-w-[90%] max-h-[60%] object-contain" : ""}
           />
@@ -411,7 +411,7 @@ const Home = () => {
                 Technical Events
               </button>
               <button
-                onClick={() => { window.open("https://shreedevisambhram.in", "_blank") }}
+                onClick={() => { window.open("https://shreedevisambhram.in/events", "_blank") }}
                 className="px-8 py-4 bg-linear-to-r from-[#FFDE1C] via-[#FDC700] to-[#F1B200] hover:from-[#FFE55C] hover:via-[#FFD700] hover:to-[#F1B200] text-gray-900/90 font-bold rounded-lg border-2 border-[#FFDE1C] hover:scale-105 transition-all duration-300 shadow-lg uppercase tracking-wider cursor-pointer">
                 Cultural Events
               </button>

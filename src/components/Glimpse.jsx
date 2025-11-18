@@ -4,46 +4,88 @@ import InfiniteMenu from "./InfiniteMenu";
 const Glimpse = () => {
   const items = [
     {
-      image: "/glimpse/g1.jpeg",
+      image: "/glimpse/g1.jpg",
       link: "https://google.com/",
       title: "Item 1",
       description: "This is pretty cool, right?",
     },
     {
-      image: "/glimpse/g2.jpeg",
+      image: "/glimpse/g2.jpg",
       link: "https://google.com/",
-      title: "Item 2",
+      title: "Item 1",
       description: "This is pretty cool, right?",
     },
     {
-      image: "/glimpse/g3.jpeg",
+      image: "/glimpse/g3.jpg",
       link: "https://google.com/",
-      title: "Item 3",
+      title: "Item 1",
       description: "This is pretty cool, right?",
     },
     {
-      image: "/glimpse/g4.jpeg",
+      image: "/glimpse/g4.jpg",
       link: "https://google.com/",
-      title: "Item 4",
+      title: "Item 1",
       description: "This is pretty cool, right?",
     },
     {
-      image: "/glimpse/g5.jpeg",
+      image: "/glimpse/g5.jpg",
       link: "https://google.com/",
-      title: "Item 4",
+      title: "Item 1",
       description: "This is pretty cool, right?",
     },
     {
-      image: "/glimpse/g4.jpeg",
+      image: "/glimpse/g6.jpg",
       link: "https://google.com/",
-      title: "Item 4",
+      title: "Item 1",
+      description: "This is pretty cool, right?",
+    },
+    {
+      image: "/glimpse/g7.jpg",
+      link: "https://google.com/",
+      title: "Item 1",
+      description: "This is pretty cool, right?",
+    },
+    {
+      image: "/glimpse/g8.jpg",
+      link: "https://google.com/",
+      title: "Item 1",
+      description: "This is pretty cool, right?",
+    },
+    {
+      image: "/glimpse/g9.jpg",
+      link: "https://google.com/",
+      title: "Item 1",
+      description: "This is pretty cool, right?",
+    },
+    {
+      image: "/glimpse/g10.jpg",
+      link: "https://google.com/",
+      title: "Item 1",
+      description: "This is pretty cool, right?",
+    },
+    {
+      image: "/glimpse/g11.jpg",
+      link: "https://google.com/",
+      title: "Item 1",
+      description: "This is pretty cool, right?",
+    },
+    {
+      image: "/glimpse/g12.jpg",
+      link: "https://google.com/",
+      title: "Item 1",
+      description: "This is pretty cool, right?",
+    },
+    {
+      image: "/glimpse/g13.jpg",
+      link: "https://google.com/",
+      title: "Item 1",
       description: "This is pretty cool, right?",
     },
   ];
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
       {/* --- LAYER 1: GRADIENT BACKGROUND --- */}
-      <div className="absolute inset-0 bg-linear-to-br from-black via-indigo-950 to-blue-950 z-0" />
+      <div className="absolute inset-0 bg-linear-to-br from-black via-indigo-950 to-gray-950 z-0" />
 
       {/* --- LAYER 2: STARS BACKGROUND --- */}
       <div
@@ -70,7 +112,7 @@ const Glimpse = () => {
         className="
             fixed inset-0
             bg-cover bg-center bg-no-repeat
-            z-20
+            z-0
             flex
             w-full
             justify-end
@@ -86,7 +128,7 @@ const Glimpse = () => {
         flex flex-col items-center justify-center
       "
       >
-        <h1 className="text-white absolute md:text-[300px] text-8xl opacity-15">
+        <h1 className="text-white absolute md:text-[280px] text-8xl opacity-30">
           Glimpse
         </h1>
         <InfiniteMenu items={items} />
