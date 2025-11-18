@@ -21,7 +21,7 @@ const borderStyles = 'shadow-[0_0_10px_2px_rgba(23,170,255,0.7),_0_0_1px_1px_rgb
 
 export const Events = () => {
   const navigate = useNavigate();
-  
+
   // Use useRef for audio objects to persist across re-renders
   const audioRef = useRef(null);
   const openAudioRef = useRef(null);
@@ -40,19 +40,20 @@ export const Events = () => {
   ];
 
   const events = [
-    { name: "Astrinix", img: "/events/img/e1.png" },
-    { name: "Tech Blitz", img: "/events/img/e2.png" },
-    { name: "Reel Verse", img: "/events/img/e4.png" },
-    { name: "Galactic Rise", img: "/events/img/e3.png" },
-    { name: "Stellar X", img: "/events/img/e5.png" },
-    { name: "Tech Nova", img: "/events/img/e6.png" },
-    { name: "Chrono Cipher", img: "/events/img/e7.png" },
-    { name: "Time Nova", img: "/events/img/e8.png" }
+    { name: "Astrinix", img: "/events/img2/e1.png" },
+    { name: "Tech Blitz", img: "/events/img2/e2.png" },
+    { name: "Reel Verse", img: "/events/img2/e4.png" },
+    { name: "Galactic Rise", img: "/events/img2/e3.png" },
+    { name: "Stellar X", img: "/events/img2/e5.png" },
+    { name: "Tech Nova", img: "/events/img2/e6.png" },
+    { name: "Chrono Cipher", img: "/events/img2/e7.png" },
+    { name: "Time Nova", img: "/events/img2/e8.png" }
   ];
 
   const eventRef = useRef(null);
   const textRef = useRef(null);
   const sectionRef = useRef(null);
+  const imageRef = useRef(null); // New ref for the image
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -64,11 +65,11 @@ export const Events = () => {
   useEffect(() => {
     audioRef.current = new Audio(desappearance);
     openAudioRef.current = new Audio(open);
-    
+
     // Optional: Preload the audio
     audioRef.current.load();
     openAudioRef.current.load();
-    
+
     return () => {
       // Cleanup on unmount
       if (audioRef.current) {
@@ -81,6 +82,41 @@ export const Events = () => {
       }
     };
   }, []);
+
+  // 3D effect based on mouse position
+  useEffect(() => {
+    if (!imageRef.current || isMobile) return;
+
+    const { x, y } = mousePosition;
+    const { innerWidth, innerHeight } = window;
+
+    const rotateY = ((x / innerWidth) - 0.5) * 30;
+    const rotateX = ((y / innerHeight) - 0.5) * -30;
+
+    const moveX = ((x / innerWidth) - 0.5) * 10;
+    const moveY = ((y / innerHeight) - 0.5) * 10;
+
+    // Apply the 3D transformation
+    imageRef.current.style.transform = `
+      perspective(1000px) 
+      rotateX(${rotateX}deg) 
+      rotateY(${rotateY}deg)
+      translateX(${moveX}px)
+      translateY(${moveY}px)
+      scale3d(1.05, 1.05, 1.05)
+    `;
+
+    // const shadowX = Math.round(rotateY * 2);
+    // const shadowY = Math.round(rotateX * 2);
+    // const shadowBlur = 20;
+    // const shadowSpread = 2;
+
+    // imageRef.current.style.boxShadow = `
+    //   ${shadowX}px ${shadowY}px ${shadowBlur}px ${shadowSpread}px rgba(23, 170, 255, 0.4),
+    //   inset 0 0 20px rgba(0, 100, 255, 0.2)
+    // `;
+
+  }, [mousePosition, isMobile]);
 
   const getVisibleEvents = () => {
     if (isMobile) {
@@ -256,25 +292,31 @@ export const Events = () => {
       </div>
 
       <div className="relative z-10 w-full h-full flex items-center justify-center">
-        <img 
-          className="md:scale-100 z-99 scale-200 absolute -bottom-50 md:-bottom-220 transition ease-in-out" 
-          src="/planet-blue.webp" 
-          alt="" 
+        <img
+          className="md:scale-100 z-99 scale-200 absolute -bottom-50 md:-bottom-220 transition ease-in-out"
+          src="/planet-blue.webp"
+          alt=""
           style={{
             animation: 'spin-reverse 180s linear infinite'
-          }} 
+          }}
         />
       </div>
 
       <div
         onClick={() => { navigate(`/event/${currentIndex}`) }}
-        ref={eventRef} 
+        ref={eventRef}
         className="relative z-30 w-full h-full flex items-center justify-center"
       >
-        <img 
-          className="absolute md:bottom-205 bottom-220 md:scale-100 scale-90 h-[60%]" 
-          src={events[currentIndex].img} 
-          alt="" 
+        <img
+          ref={imageRef}
+          className="absolute md:bottom-205 bottom-220 md:scale-90 scale-70 md:h-[60%] transition-all duration-150 ease-out"
+          style={{
+            transformStyle: 'preserve-3d',
+            backfaceVisibility: 'hidden',
+            filter: 'brightness(1.1) contrast(1.05)'
+          }}
+          src={events[currentIndex].img}
+          alt=""
         />
       </div>
 
@@ -313,7 +355,7 @@ export const Events = () => {
 
       <button
         className="absolute bg-gray-200 px-2 py-1 rounded-xl uppercase cursor-pointer text-xl bottom-3 right-6 z-9999 tracking-wider border-2 border-gray-800 text-shadow-gray-600 font-bold hover:scale-110"
-        onClick={() => { 
+        onClick={() => {
           if (openAudioRef.current) {
             openAudioRef.current.currentTime = 0;
             openAudioRef.current.play().catch(error => {
