@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -12,20 +12,26 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 import { eventRules } from "@/data/eventRules";
 
+import { useMediaQuery } from 'react-responsive';
+
 const events = [
-  { name: "Astrinix", img: "/events/img/e1.png" },
-  { name: "Tech Blitz", img: "/events/img/e2.png" },
-  { name: "Reel Verse", img: "/events/img/e4.png" },
-  { name: "Galactic Rise", img: "/events/img/e3.png" },
-  { name: "Stellar X", img: "/events/img/e5.png" },
-  { name: "Tech Nova", img: "/events/img/e6.png" },
-  { name: "Chrono Cipher", img: "/events/img/e7.png" },
-  { name: "Time Nova", img: "/events/img/e8.png" }
+  { name: "Astrinix", img: "/events/img2/e1.png" },
+  { name: "Tech Blitz", img: "/events/img2/e2.png" },
+  { name: "Reel Verse", img: "/events/img2/e4.png" },
+  { name: "Galactic Rise", img: "/events/img2/e3.png" },
+  { name: "Stellar X", img: "/events/img2/e5.png" },
+  { name: "Tech Nova", img: "/events/img2/e6.png" },
+  { name: "Chrono Cipher", img: "/events/img2/e7.png" },
+  { name: "Time Nova", img: "/events/img2/e8.png" }
 ]
 
 export const Event = () => {
   const { section } = useParams();
   const navigate = useNavigate();
+
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isScrolled, setIsScrolled] = useState(false);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useEffect(() => {
     if (!(section >= 0) || !(section <= 7)) {
@@ -33,7 +39,6 @@ export const Event = () => {
     }
   }, [section, navigate]);
 
-  // Get current event data from eventRules
   const currentEvent = eventRules[section];
   const currentEventImage = events[section];
 
@@ -49,10 +54,42 @@ export const Event = () => {
     { src: "/event/bg/img3.webp", alt: "bottom astronaut", zIndex: 10 },
   ]
 
-  // GSAP START
-  const containerRef = useRef(null);
-  const eventNameRef = useRef(null);
   const eventImageRef = useRef(null);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (!eventImageRef.current || isMobile || isScrolled) return;
+
+    const { x, y } = mousePosition;
+    const { innerWidth, innerHeight } = window;
+
+    const rotateY = ((x / innerWidth) - 0.5) * 20;
+    const rotateX = ((y / innerHeight) - 0.5) * -20;
+
+    const moveX = ((x / innerWidth) - 0.5) * 15;
+    const moveY = ((y / innerHeight) - 0.5) * 15;
+
+    eventImageRef.current.style.transform = `
+      perspective(1000px) 
+      rotateX(${rotateX}deg) 
+      rotateY(${rotateY}deg)
+      translateX(${moveX}px)
+      translateY(${moveY}px)
+      scale3d(1.05, 1.05, 1.05)
+    `;
+  }, [mousePosition, isMobile, isScrolled]);
+
+  const handleMouseMove = (e) => {
+    if (!containerRef.current || isScrolled) return;
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    setMousePosition({ x, y });
+  };
+
+  const eventNameRef = useRef(null);
   const astronautRef = useRef(null);
   const bottomPlanetRef = useRef(null);
   const topPlanetRef = useRef(null);
@@ -66,17 +103,15 @@ export const Event = () => {
     const scene1 = gsap.to([el1, el2],
       {
         translateY: -500,
-        // ease:"power3.inOut",
         scrollTrigger: {
           trigger: container,
-          // markers: true,
           start: "top top",
           end: "20%",
           scrub: 1,
+          onEnter: () => setIsScrolled(true),
+          onLeaveBack: () => setIsScrolled(false),
         }
       });
-
-
 
     const el3 = astronautRef.current;
 
@@ -87,7 +122,6 @@ export const Event = () => {
         rotationZ: 90,
         scrollTrigger: {
           trigger: container,
-          // markers: true,
           start: "1%",
           end: "100%",
           scrub: 1,
@@ -101,7 +135,6 @@ export const Event = () => {
         translateY: 100,
         scrollTrigger: {
           trigger: container,
-          // markers: true,
           start: "1%",
           end: "80%",
           scrub: 1,
@@ -114,7 +147,6 @@ export const Event = () => {
       top: -150,
       scrollTrigger: {
         trigger: container,
-        // markers: true,
         start: "1%",
         end: "80%",
         scrub: 1,
@@ -127,14 +159,12 @@ export const Event = () => {
       translateY: 0,
       scrollTrigger: {
         trigger: container,
-        // markers: true,
         start: "8%",
         end: "13%",
         scrub: 1,
       }
     })
 
-    // Cleanup the scroll trigger animation on component unmount
     return () => {
       scene1.kill();
       scene2.kill();
@@ -143,10 +173,8 @@ export const Event = () => {
       scene5.kill();
     }
   });
-  // GSAP END
 
   const handleRegister = () => {
-    // window.open("https://konfhub.com/medha-2k25", "_blank")
     alert("Registration opens on November 20!")
   }
 
@@ -154,7 +182,8 @@ export const Event = () => {
     <section
       ref={containerRef}
       id="event"
-      className="relative w-screen h-[300vh] bg-black/90 bg-linear-to-b from-[#162145] via-[#073448] to-[#122D53] overflow-hidden cursor-pointer"
+      className="relative w-screen h-[250vh] bg-black/90 bg-linear-to-b from-[#162145] via-[#073448] to-[#122D53] overflow-hidden cursor-pointer"
+      onMouseMove={handleMouseMove}
     >
       {backgroundLayers.map((layer) => (
         <img
@@ -166,7 +195,6 @@ export const Event = () => {
         />
       ))}
 
-      {/* Top Right Image */}
       <img
         ref={topPlanetRef}
         className="fixed top-0 right-0 md:scale-55 md:-translate-y-150 md:translate-x-80"
@@ -175,8 +203,7 @@ export const Event = () => {
         style={{ zIndex: images[0].zIndex }}
       />
 
-      {/* Event type */}
-      <div className="absolute z-10 w-full h-full flex justify-center md:translate-y-[21%] translate-y-[25%]">
+      <div className="absolute z-10 w-full h-full flex justify-center md:translate-y-[28%] translate-y-[25%]">
         <div className="h-12 overflow-hidden">
           <h1 ref={eventTypeRef} className="md:text-4xl text-4xl uppercase text-white translate-y-12">
             {currentEvent?.eventType || "Event Type"}
@@ -184,7 +211,6 @@ export const Event = () => {
         </div>
       </div>
 
-      {/*Bottom Image */}
       <img
         ref={bottomPlanetRef}
         className="fixed bottom-0 left-0 md:scale-100 md:translate-y-100 -translate-x-20"
@@ -193,7 +219,6 @@ export const Event = () => {
         style={{ zIndex: images[1].zIndex }}
       />
 
-      {/* Floating Astronaut */}
       <img
         ref={astronautRef}
         className="fixed bottom-0 left-0 md:scale-25 scale-40 md:translate-y-120 translate-y-30 md:translate-x-78"
@@ -202,26 +227,29 @@ export const Event = () => {
         style={{ zIndex: images[1].zIndex }}
       />
 
-      {/* Center Floating Image*/}
-      <div ref={eventImageRef} className="fixed inset-0 z-20 w-full h-full flex items-center justify-center ">
+      <div className="fixed inset-0 z-10 w-full h-full flex items-center justify-center">
         <img
-          className="animated-event-img transition md:scale-25 scale-35 -rotate-z-8 ease-in-out transform md:-translate-y-10 -translate-y-35"
+          ref={eventImageRef}
+          className="md:h-[45%] h-[40%] opacity-90 md:-translate-y-10 -translate-y-35"
           src={currentEventImage?.img}
           alt={currentEventImage?.name}
+          style={{
+            transformStyle: 'preserve-3d',
+            backfaceVisibility: 'hidden',
+            filter: 'brightness(1.1) contrast(1.05)',
+            transition: isScrolled ? 'transform 0.3s ease' : 'none'
+          }}
         />
       </div>
 
-      {/* Center Event Name */}
       <div className="fixed z-10 w-full h-full flex items-center justify-center">
-        <h1 ref={eventNameRef} className="md:text-[130px] text-4xl transition ease-in-out uppercase text-[#83EFFF]">
-          {currentEvent?.eventName || currentEventImage?.name || ""}
+        <h1 ref={eventNameRef} className="md:text-[130px] text-4xl transition [-webkit-text-stroke:2px_black] ease-in-out uppercase text-[#83EFFF]">
         </h1>
       </div>
 
-      {/* Rules and Coordinators Section */}
       {currentEvent && (
-        <Rules 
-          eventName={currentEvent.eventName} 
+        <Rules
+          eventName={currentEvent.eventName}
           eventType={currentEvent.eventType}
           rules={currentEvent.rules}
           coordinators={currentEvent.coordinators}
@@ -229,8 +257,7 @@ export const Event = () => {
         />
       )}
 
-      {/* Register Now Button */}
-      <div className="absolute top-[85%] left-1/2 transform -translate-x-1/2 z-50">
+      <div className="absolute top-[93%] left-1/2 transform -translate-x-1/2 z-50">
         <button
           onClick={handleRegister}
           className="bg-linear-to-r cursor-pointer from-[#83EFFF] to-[#0EA5E9] hover:from-[#67D8FF] hover:to-[#0284C7] text-gray-900/90 font-bold py-3 md:px-8 px-5 rounded-lg md:text-lg uppercase tracking-wider shadow-lg transform hover:scale-105 transition-all duration-300 border-2 border-[#83EFFF]/90 font-mono"
