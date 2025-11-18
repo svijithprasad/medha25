@@ -15,10 +15,10 @@ export default function SocialBar() {
   useEffect(() => {
     beepAudioRef.current = new Audio(beep);
     zapAudioRef.current = new Audio(zap);
-    
+
     beepAudioRef.current.load();
     zapAudioRef.current.load();
-    
+
     return () => {
       if (beepAudioRef.current) {
         beepAudioRef.current.pause();
@@ -41,7 +41,7 @@ export default function SocialBar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            onClick={() => { 
+            onClick={() => {
               if (beepAudioRef.current) {
                 beepAudioRef.current.currentTime = 0;
                 beepAudioRef.current.play().catch(error => {
@@ -55,7 +55,7 @@ export default function SocialBar() {
       </AnimatePresence>
 
       <button
-        onClick={() => { 
+        onClick={() => {
           if (beepAudioRef.current) {
             beepAudioRef.current.currentTime = 0;
             beepAudioRef.current.play().catch(error => {
@@ -72,7 +72,7 @@ export default function SocialBar() {
       </button>
 
       <button
-        onClick={() => { 
+        onClick={() => {
           if (beepAudioRef.current) {
             beepAudioRef.current.currentTime = 0;
             beepAudioRef.current.play().catch(error => {
@@ -106,7 +106,7 @@ export default function SocialBar() {
             <div className="flex flex-col gap-3">
               <div className="flex gap-3">
                 <button
-                  onClick={() => { 
+                  onClick={() => {
                     if (zapAudioRef.current) {
                       zapAudioRef.current.currentTime = 0;
                       zapAudioRef.current.play().catch(error => {
@@ -126,7 +126,7 @@ export default function SocialBar() {
                 </button>
 
                 <button
-                  onClick={() => { 
+                  onClick={() => {
                     if (zapAudioRef.current) {
                       zapAudioRef.current.currentTime = 0;
                       zapAudioRef.current.play().catch(error => {
@@ -148,7 +148,7 @@ export default function SocialBar() {
 
               <div className="flex gap-3">
                 <button
-                  onClick={() => { 
+                  onClick={() => {
                     if (zapAudioRef.current) {
                       zapAudioRef.current.currentTime = 0;
                       zapAudioRef.current.play().catch(error => {
@@ -168,7 +168,8 @@ export default function SocialBar() {
                 </button>
 
                 <button
-                  onClick={() => { 
+                  onClick={() => {
+                    // --- Your existing logic ---
                     if (zapAudioRef.current) {
                       zapAudioRef.current.currentTime = 0;
                       zapAudioRef.current.play().catch(error => {
@@ -176,7 +177,15 @@ export default function SocialBar() {
                       });
                     }
                     setOpen(false);
-                    navigate("/brochure");
+                    const link = document.createElement('a');
+                    link.href = '/medha25.pdf';
+                    link.setAttribute(
+                      'download',
+                      'medha25.pdf',
+                    );
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
                   }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[5px_5px_90px_5px] border-[3px] border-[#2d2d2d]
