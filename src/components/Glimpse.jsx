@@ -16,13 +16,13 @@ const Glimpse = () => {
       description: "This is pretty cool, right?",
     },
     {
-      image: "/glimpse/g3.jpg",
+      image: "/glimpse/g4.jpg",
       link: "https://google.com/",
       title: "Item 1",
       description: "This is pretty cool, right?",
     },
     {
-      image: "/glimpse/g4.jpg",
+      image: "/glimpse/g3.jpg",
       link: "https://google.com/",
       title: "Item 1",
       description: "This is pretty cool, right?",
@@ -85,7 +85,7 @@ const Glimpse = () => {
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
       {/* --- LAYER 1: GRADIENT BACKGROUND --- */}
-      <div className="absolute inset-0 bg-linear-to-br from-black via-indigo-950 to-gray-950 z-0" />
+      <div className="absolute inset-0 bg-linear-to-br from-gray-900 via-gray-950 to-gray-900 z-0" />
 
       {/* --- LAYER 2: STARS BACKGROUND --- */}
       <div
@@ -104,6 +104,7 @@ const Glimpse = () => {
           bg-[url('/1.png.webp')]
           bg-cover bg-center bg-no-repeat
           mix-blend-screen
+          opacity-70
           z-20
         "
       />

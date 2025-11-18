@@ -70,7 +70,7 @@ const Home = () => {
     const el1 = astronautRef.current;
 
     const scene1 = gsap.to(el1, {
-      top: !isMobile ? "2900px" : "2400px",
+      top: !isMobile ? "2700px" : "2400px",
       scale: 10,
       duration: 500,
       scrollTrigger: {
