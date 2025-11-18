@@ -1,6 +1,8 @@
-import { Instagram, Globe, Facebook, MapPin } from 'lucide-react';
+import { Instagram, Globe, Facebook, MapPin, Volume2, VolumeOffIcon } from 'lucide-react';
+import { useState } from 'react';
 
 export const Contact = () => {
+  const [play, setPlay] = useState(false);
   return (
     <>
       <div className="fixed md:left-6 left-3 md:bottom-6 bottom-3 flex md:space-x-4 space-x-1  z-99">
@@ -22,6 +24,11 @@ export const Contact = () => {
         <span className="p-2 bg-gray-200/90 rounded-lg border border-gray-800">
           <a href="https://maps.app.goo.gl/ogkykTHehmiLCfxo9" target="_blank" rel="noopener noreferrer">
             <MapPin className="cursor-pointer hover:scale-110 transition text-red-600" size={24} />
+          </a>
+        </span>
+        <span className="p-2 bg-gray-200/90 rounded-lg border border-gray-800">
+          <a href="https://maps.app.goo.gl/ogkykTHehmiLCfxo9" target="_blank" rel="noopener noreferrer">
+            <Volume2 className="cursor-pointer hover:scale-110 transition text-red-600" size={24} />
           </a>
         </span>
       </div>
