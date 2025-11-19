@@ -118,11 +118,12 @@ export default function SocialBar() {
                   }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[90px_5px_5px_5px] border-[3px] border-[#2d2d2d]
-                  shadow-[6px_6px_0px_#2d2d2d] pt-3 pl-3 flex items-center justify-center
+                  shadow-[6px_6px_0px_#2d2d2d] pt-3 pl-3 flex flex-col items-center justify-center
                   transition-all duration-100 hover:-translate-x-1.5 hover:-translate-y-1.5
                   hover:shadow-[12px_12px_0px_#2d2d2d] hover:bg-[#fd1d1d]"
                 >
                   <House size={30} className="group-hover:text-white" />
+                  <p className="text-sm -mb-2 mt-1">Home</p>
                 </button>
 
                 <button
@@ -138,11 +139,12 @@ export default function SocialBar() {
                   }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[5px_90px_5px_5px] border-[3px] border-[#2d2d2d]
-                  shadow-[6px_6px_0px_#2d2d2d] pt-3 pr-3 flex items-center justify-center
+                  shadow-[6px_6px_0px_#2d2d2d] pt-3 pr-3 flex flex-col items-center justify-center
                   transition-all duration-100 hover:-translate-x-1.5 hover:-translate-y-1.5
                   hover:shadow-[12px_12px_0px_#2d2d2d] hover:bg-[#24a0ed]"
                 >
                   <PartyPopper size={30} className="group-hover:text-white" />
+                  <p className="text-sm -mb-2 mt-1">Events</p>
                 </button>
               </div>
 
@@ -160,10 +162,11 @@ export default function SocialBar() {
                   }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[5px_5px_5px_90px] border-[3px] border-[#2d2d2d]
-                  shadow-[6px_6px_0px_#2d2d2d] pb-2.5 pl-3 flex items-center justify-center
+                  shadow-[6px_6px_0px_#2d2d2d] pb-2.5 pl-3 flex flex-col text-sm items-center justify-center
                   transition-all duration-100 hover:-translate-x-1.5 hover:-translate-y-1.5
                   hover:shadow-[12px_12px_0px_#2d2d2d] hover:bg-[#f7b733]"
                 >
+                  <p className="text-sm mr-2 -mt-2 mb-1">Glimpse</p>
                   <Stars size={30} className="group-hover:text-white" />
                 </button>
 
@@ -189,10 +192,11 @@ export default function SocialBar() {
                   }}
                   className="group cursor-pointer w-[90px] h-[90px] bg-white 
                   rounded-[5px_5px_90px_5px] border-[3px] border-[#2d2d2d]
-                  shadow-[6px_6px_0px_#2d2d2d] pb-3 pr-3 flex items-center justify-center
+                  shadow-[6px_6px_0px_#2d2d2d] pb-3 pr-3 flex flex-col items-center justify-center
                   transition-all duration-100 hover:-translate-x-1.5 hover:-translate-y-1.5
                   hover:shadow-[12px_12px_0px_#2d2d2d] hover:bg-[#4cd137]"
                 >
+                  <p className="text-sm ml-2 -mt-2 mb-1">Brochure</p>
                   <LucideNewspaper size={30} className="group-hover:text-white" />
                 </button>
               </div>
