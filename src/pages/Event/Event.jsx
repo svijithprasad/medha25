@@ -197,7 +197,7 @@ export const Event = () => {
 
       <img
         ref={topPlanetRef}
-        className="fixed top-0 right-0 md:scale-55 md:-translate-y-150 md:translate-x-80"
+        className="fixed top-0 right-0 md:scale-55 lg:-translate-y-180 md:-translate-y-150 lg:translate-x-100 md:translate-x-80"
         src={images[0].src}
         alt={images[0].alt}
         style={{ zIndex: images[0].zIndex }}
@@ -213,7 +213,7 @@ export const Event = () => {
 
       <img
         ref={bottomPlanetRef}
-        className="fixed bottom-0 left-0 md:scale-100 md:translate-y-100 -translate-x-20"
+        className="fixed bottom-0 left-0 md:scale-100 md:translate-y-100 lg:translate-y-120 -translate-x-20"
         src={images[1].src}
         alt={images[1].alt}
         style={{ zIndex: images[1].zIndex }}
@@ -221,7 +221,7 @@ export const Event = () => {
 
       <img
         ref={astronautRef}
-        className="fixed bottom-0 left-0 md:scale-25 scale-40 md:translate-y-120 translate-y-30 md:translate-x-78"
+        className="fixed bottom-0 left-0 md:scale-25 scale-40  md:translate-y-120 lg:translate-y-115 translate-y-30 md:translate-x-78 lg:translate-x-118"
         src={images[2].src}
         alt={images[2].alt}
         style={{ zIndex: images[1].zIndex }}
