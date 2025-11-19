@@ -44,10 +44,17 @@ const Home = () => {
 
   // Fixed media query - use the hook directly in component
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const isPc = useMediaQuery({ query: '(min-width: 1300px)' });
+
+  useEffect(() => {
+    console.log(isPc);
+  }, [isMobile, isPc]);
 
   // Stable mouse move handler with useCallback
   const handleMouseMove = useCallback((e) => {
     if (isMobile) return;
+
+    
 
     const mouseX = e.clientX / window.innerWidth;
     const mouseY = e.clientY / window.innerHeight;
@@ -70,7 +77,7 @@ const Home = () => {
     const el1 = astronautRef.current;
 
     const scene1 = gsap.to(el1, {
-      top: !isMobile ? "2700px" : "2400px",
+      top: !isMobile ? isPc ? "2900px" : "2700px" : "2400px",
       scale: 10,
       duration: 500,
       scrollTrigger: {
@@ -437,7 +444,7 @@ const Home = () => {
         <img
           ref={planetSurfaceRef}
           src="./planet-yellow-sativa.png.webp"
-          className="planet-surface fixed top-[5%] max-w-[600px] md:translate-x-162 translate-x-25 md:scale-100 scale-75 z-25 animate-slow-spin animate-planet-glow"
+          className="planet-surface fixed top-[5%] max-w-[600px] lg:translate-x-185 md:translate-x-162 translate-x-25 md:scale-100 scale-75 z-25 animate-slow-spin animate-planet-glow"
           style={{
             filter:
               "drop-shadow(0 0 40px rgba(255, 165, 0, 0.6)) drop-shadow(0 0 80px rgba(255, 100, 0, 0.3))",
@@ -473,7 +480,7 @@ const Home = () => {
         <img
           ref={astronautRef}
           src="./home-astronaut.webp"
-          className="astronaut md:scale-150 scale-170 fixed md:top-[60%] top-[90%] h-[65%] w-auto md:translate-x-125 translate-x-20 md:-translate-y-40 -translate-y-65 z-40 min-h-[300px] animate-float-astronaut md:h-[90%] md:min-h-[400px]"
+          className={`astronaut md:scale-150 scale-170 fixed md:top-[60%] top-[90%] h-[65%] w-auto lg:translate-x-150 md:translate-x-125 translate-x-20 md:-translate-y-40 -translate-y-65 z-40 min-h-[300px] animate-float-astronaut md:h-[90%] md:min-h-[400px]`}
           style={{
             filter:
               "drop-shadow(0 15px 40px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 30px rgba(255, 100, 150, 0.2))",
