@@ -293,7 +293,7 @@ export const Events = () => {
 
       <div className="relative z-10 w-full h-full flex items-center justify-center">
         <img
-          className="md:scale-100 z-99 scale-200 absolute -bottom-50 md:-bottom-220 transition ease-in-out"
+          className="md:scale-100 z-99  scale-200 absolute -bottom-50 lg:-bottom-280 md:-bottom-220 transition ease-in-out"
           src="/planet-blue.webp"
           alt=""
           style={{
@@ -309,7 +309,7 @@ export const Events = () => {
       >
         <img
           ref={imageRef}
-          className="absolute md:bottom-205 bottom-220 md:scale-90 scale-70 md:h-[60%] transition-all duration-150 ease-out"
+          className="absolute lg:bottom-230 md:bottom-205 bottom-220 md:scale-90 scale-70 md:h-[60%] transition-all duration-150 ease-out"
           style={{
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
